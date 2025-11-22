@@ -34,10 +34,19 @@ public:
 };
 
 
-int main()
+int main(int argc, char* argv[])
 {
+  if (argc != 2)
+  {
+    std::cout << "Usage: " << argv[0] << " <steps>" << std::endl;
+    return 1;
+  }
+
   double tend = 4*M_PI;
-  int steps = 100;
+
+  // in oder to not build it each time when changing stepsize, we make it an argument
+  const int steps = std::stoi(argv[1]);  // get nr steps as argument
+
   double tau = tend/steps;
 
   Vector<> y = { 1, 0 };  // initializer list
