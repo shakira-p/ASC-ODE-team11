@@ -1,5 +1,5 @@
 import numpy as np
-type = "explict"
+type = "crank"
 data = np.loadtxt(f"data/output_test_ode_{type}.txt", usecols=(0, 1, 2))
 
 import matplotlib.pyplot as plt
