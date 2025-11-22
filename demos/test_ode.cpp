@@ -44,11 +44,11 @@ int main()
   auto rhs = std::make_shared<MassSpring>(1.0, 1.0);
   
   //ExplicitEuler stepper(rhs);
-  ImplicitEuler stepper(rhs);
+  //ImplicitEuler stepper(rhs);
   //ImprovedEuler stepper(rhs);
-// CrankNicolson stepper(rhs);
+  CrankNicolson stepper(rhs);
 
-  std::ofstream outfile ("output_test_ode_implicit.txt");
+  std::ofstream outfile ("output_test_ode_crank.txt");
   std::cout << 0.0 << "  " << y(0) << " " << y(1) << std::endl;
   outfile << 0.0 << "  " << y(0) << " " << y(1) << std::endl;
 

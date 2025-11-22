@@ -79,6 +79,78 @@ namespace ASC_ode
     }
   };
 
+/**
+class CrankNicolson : public TimeStepper
+  {
+    std::shared_ptr<NonlinearFunction> m_equ;
+    std::shared_ptr<Parameter> m_tau;
+    std::shared_ptr<ConstantFunction> m_yold;
+  public:
+    CrankNicolson(std::shared_ptr<NonlinearFunction> rhs)
+    : TimeStepper(rhs), m_tau(std::make_shared<Parameter>(0.0))
+    {
+      m_yold = std::make_shared<ConstantFunction>(rhs->dimX());
+      auto ynew = std::make_shared<IdentityFunction>(rhs->dimX());
+    }
+
+    void DoStep(double tau, VectorView<double> y) override
+    {
+      m_yold->set(y);
+      m_tau->set(tau);
+	  this->m_rhs->evaluate(y, m_rhs);
+
+	  this->m_rhs->evaluate(m_rhs, m_rhs_new);
+
+	  y += tau/2 * (m_rhs + m_rhs_new);
+	  auto tau_param = std::make_shared<Parameter>(0.5 * tau);
+	  m_equ = ynew - m_yold - tau_param * (m_rhs + m_rhs_new);
+
+      NewtonSolver(m_equ, y);
+    }
+  };
+*/
+
+class CrankNicolson : public TimeStepper
+{
+  std::shared_ptr<NonlinearFunction> m_equ;
+  std::shared_ptr<Parameter> m_tau;
+  std::shared_ptr<ConstantFunction> m_yold;
+  std::shared_ptr<ConstantFunction> m_fold;
+  Vector<> m_vecf_old;
+public:
+  CrankNicolson(std::shared_ptr<NonlinearFunction> rhs)
+  : TimeStepper(rhs),
+    m_tau(std::make_shared<Parameter>(0.0)),
+    m_yold(std::make_shared<ConstantFunction>(rhs->dimX())),
+    m_fold(std::make_shared<ConstantFunction>(rhs->dimF())),
+    m_vecf_old(rhs->dimF())
+  {
+    // m_equ will be constructed in DoStep,  cause tau and f_old are first known there
+  }
+
+  void DoStep(double tau, VectorView<double> y) override
+  {
+    // save old value y_old = y
+    m_yold->set(y);
+
+    // f_old = f(y_old)
+    this->m_rhs->evaluate(y, m_vecf_old);
+    m_fold->set(m_vecf_old);
+
+    //  R(y_new) = y_new - y_old - (tau/2)*(f_old + f(y_new))
+    auto ynew = std::make_shared<IdentityFunction>(this->m_rhs->dimX());
+    auto tau_param = std::make_shared<Parameter>(0.5 * tau);
+    m_equ = ynew - m_yold - tau_param * (m_fold + this->m_rhs);
+
+    // Newton solves R(y_new)=0, start value is current y
+    NewtonSolver(m_equ, y);
+  }
+};
+
+
+
+
+
 
   
 
