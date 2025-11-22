@@ -1,6 +1,6 @@
 import numpy as np
-data = np.loadtxt('output_test_ode.txt', usecols=(0, 1, 2))
-# print (data)
+type = "improved"
+data = np.loadtxt(f"data/output_test_ode_{type}.txt", usecols=(0, 1, 2))
 
 import matplotlib.pyplot as plt
 
@@ -12,6 +12,7 @@ plt.title('Mass-Spring System Time Evolution')
 plt.legend()
 plt.grid()
 plt.show()
+plt.savefig(f"MassSpringSystemTimeEvolution_{type}.png")
 
 
 plt.plot(data[:,1], data[:,2], label='phase plot')
@@ -21,4 +22,5 @@ plt.title('Mass-Spring System Phase Plot')
 plt.legend()
 plt.grid()
 plt.show()
+plt.savefig(f"MassSpringPhasePlot_{type}.png")
 
