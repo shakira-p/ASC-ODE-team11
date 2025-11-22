@@ -52,20 +52,20 @@ int main(int argc, char* argv[])
   Vector<> y = { 1, 0 };  // initializer list
   auto rhs = std::make_shared<MassSpring>(1.0, 1.0);
   
-  //ExplicitEuler stepper(rhs);
-  //ImplicitEuler stepper(rhs);
-  //ImprovedEuler stepper(rhs);
+  // ExplicitEuler stepper(rhs);
+  // ImplicitEuler stepper(rhs);
+  // ImprovedEuler stepper(rhs);
   CrankNicolson stepper(rhs);
 
-  std::ofstream outfile ("output_test_ode_crank.txt");
-  std::cout << 0.0 << "  " << y(0) << " " << y(1) << std::endl;
-  outfile << 0.0 << "  " << y(0) << " " << y(1) << std::endl;
+  std::ofstream outfile ("../ASC-ODE/demos/data/crank.txt");
+  std::cout << 0.0 << "  " << y(0) << " " << y(1) << " " << steps << std::endl;
+  outfile << 0.0 << "  " << y(0) << " " << y(1) << " " << steps << std::endl;
 
   for (int i = 0; i < steps; i++)
   {
      stepper.DoStep(tau, y);
 
-     std::cout << (i+1) * tau << "  " << y(0) << " " << y(1) << std::endl;
-     outfile << (i+1) * tau << "  " << y(0) << " " << y(1) << std::endl;
+     std::cout << (i+1) * tau << "  " << y(0) << " " << y(1) << " " << steps << std::endl;
+     outfile << (i+1) * tau << "  " << y(0) << " " << y(1) << " " <<  steps << std::endl;
   }
 }

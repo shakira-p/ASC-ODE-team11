@@ -1,26 +1,34 @@
 import numpy as np
-type = "crank"
-data = np.loadtxt(f"data/output_test_ode_{type}.txt", usecols=(0, 1, 2))
-
 import matplotlib.pyplot as plt
 
-plt.plot(data[:,0], data[:,1], label='position')
-plt.plot(data[:,0], data[:,2], label='velocity')
+type = ["explicit", "implicit", "improved", "crank"]
+step = "150"
+data = []
+
+colors = ['#1f77b4', '#ff7f0e', '#d62728', '#2ca02c']
+
+for t in type:
+    data.append(np.loadtxt(f"data/{t}{step}.txt", usecols=(0, 1, 2)))
+
+for i in range(len(data)):
+    plt.plot(data[i][:,0], data[i][:,1], '--', label=f'{type[i]} position', color=colors[i])
+    plt.plot(data[i][:,0], data[i][:,2], label=f'{type[i]} velocity', color=colors[i])
 plt.xlabel('time')
 plt.ylabel('value')
 plt.title('Mass-Spring System Time Evolution')
 plt.legend()
 plt.grid()
-plt.savefig(f"MassSpringSystemTimeEvolution_{type}.png")
+plt.savefig(f"./plots/MassSpringSystemTimeEvolution_{step}.png")
 plt.show()
 
 
-plt.plot(data[:,1], data[:,2], label='phase plot')
+for i in range(len(data)):
+    plt.plot(data[i][:,1], data[i][:,2], label=f'{type[i]}', color=colors[i])
 plt.xlabel('position')
 plt.ylabel('velocity')
 plt.title('Mass-Spring System Phase Plot')
 plt.legend()
 plt.grid()
-plt.savefig(f"MassSpringPhasePlot_{type}.png")
+plt.savefig(f"./plots/MassSpringPhasePlot_{step}.png")
 plt.show()
 
