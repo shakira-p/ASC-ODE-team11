@@ -7,6 +7,28 @@ Find theory behind here: https://jschoeberl.github.io/IntroSC/ODEs/ODEs.html
 
 # get the program running wuhu
 
+# get documentation running on Windows WSL wuhu
+
+```sh
+# 1. Install pipx
+sudo apt install pipx
+
+# 2. Add it to your path (run this once)
+pipx ensurepath
+
+# 3. Install jupyter-book (creates the hidden venv automatically)
+pipx install "jupyter-book<2.0"
+pipx inject jupyter-book ghp-import
+
+# 4. Open new terminal
+
+# 5. Go to docs folder
+cd docs/
+
+# 6. Build
+jupyter-book build .
+```
+
 do this in src folder:
 
 ```
