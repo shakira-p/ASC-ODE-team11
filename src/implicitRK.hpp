@@ -48,9 +48,56 @@ namespace ASC_ode {
     }
   };
 
+/*
+  explicit runge kutta methods
+*/
 
+  class ExplicitRungeKutta : public TimeStepper
+  {
+    Matrix<> m_a;
+    Vector<> m_b, m_c;
+    int m_stages;
+    int m_n;
+    Vector<> m_k;
+    Vector<> m_ystage;
+  public:
+    ExplicitRungeKutta(std::shared_ptr<NonlinearFunction> rhs,
+                       const Matrix<> &a,
+                       const Vector<> &b,
+                       const Vector<> &c)
+        : TimeStepper(rhs),
+          m_a(a), m_b(b), m_c(c),
+          m_stages(c.size()),
+          m_n(rhs->dimX()),
+          m_k(m_stages * m_n),
+          m_ystage(m_n)
+    { }
 
+    void DoStep(double tau, VectorView<> y) override
+    {
+      for (int j = 0; j < m_stages; j++)
+      {
+        // ystage = y + tau * sum_{l=0}^{j-1} a_{j,l} * k_l
+        m_ystage = y;
+        for (int l = 0; l < j; l++)
+        {
+          double a_jl = m_a(j, l);
+          if (a_jl == 0.0) continue;
+          auto k_l = m_k.range(l * m_n, (l + 1) * m_n);
+          m_ystage += tau * a_jl * k_l;
+        }
 
+        auto k_j = m_k.range(j * m_n, (j + 1) * m_n);
+        m_rhs->evaluate(m_ystage, k_j);
+      }
+      // y_{n+1} = y_n + tau * sum_j b_j k_j
+      for (int j = 0; j < m_stages; j++)
+      {
+        auto k_j = m_k.range(j * m_n, (j + 1) * m_n);
+        y += tau * m_b(j) * k_j;
+      }
+    }
+  };
 
 
 

@@ -55,21 +55,21 @@ int main(int argc, char* argv[])
 
 
 
-/*
+
   Vector<> Radau(3), RadauWeight(3);
   GaussRadau (Radau, RadauWeight);
   // not sure about weights, comput them via ComputeABfromC
-  cout << "Radau = " << Radau << ", weight = " << RadauWeight <<  endl;
+  std::cout << "Radau = " << Radau << ", weight = " << RadauWeight <<  std::endl;
         Vector<> Gauss2c(2), Gauss3c(3);
-*/
+
 
 
   // ExplicitEuler stepper(rhs);
   // ImplicitEuler stepper(rhs);
   // ImprovedEuler stepper(rhs);
-  CrankNicolson stepper(rhs);
+  //CrankNicolson stepper(rhs);
 
-  // RungeKutta stepper(rhs, Gauss2a, Gauss2b, Gauss2c);
+   ExplicitRungeKutta stepper(rhs, Gauss2a, Gauss2b, Gauss2c);
 
   // Gauss3c .. points tabulated, compute a,b:
   auto [Gauss3a,Gauss3b] = ComputeABfromC (Gauss3c);
@@ -86,18 +86,18 @@ int main(int argc, char* argv[])
   ImplicitRungeKutta stepper(rhs, a, b, c);
   */
 
-  /*
+
   // arbitrary order Radau
   int stages = 5;
   Vector<> c(stages), b1(stages);
   GaussRadau(c, b1);
 
   auto [a, b] = ComputeABfromC(c);
-  ImplicitRungeKutta stepper(rhs, a, b, c);
-  */
+  //ImplicitRungeKutta stepper(rhs, a, b, c);
 
 
-  std::ofstream outfile ("../ASC-ODE/demos/data/crank.txt");
+
+  std::ofstream outfile ("../rungekutta_explicit.txt");
   std::cout << 0.0 << "  " << y(0) << " " << y(1) << " " << steps << std::endl;
   outfile << 0.0 << "  " << y(0) << " " << y(1) << " " << steps << std::endl;
 
