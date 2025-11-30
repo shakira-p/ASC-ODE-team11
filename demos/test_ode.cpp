@@ -35,6 +35,34 @@ public:
 };
 
 
+class ElectricNetwork : public NonlinearFunction
+{
+private:
+  double resistivity;
+  double capacity;
+
+public:
+  ElectricNetwork(double r, double c) : resistivity(r), capacity(c) {}
+
+  size_t dimX() const override { return 2; }
+  size_t dimF() const override { return 2; }
+
+  void evaluate (VectorView<double> x, VectorView<double> f) const override
+  {
+    f(0) = (cos(100*M_PI*x(1)) - x(0)) / (resistivity*capacity);
+    f(1) = 1.0;
+  }
+
+  void evaluateDeriv (VectorView<double> x, MatrixView<double> df) const override
+  {
+    df = 0.0;
+    df(0, 0) = -1.0 / (resistivity * capacity);
+    df(0, 1) = -100*M_PI*sin(100*M_PI*x(1)) / (resistivity*capacity);
+    df(1, 0) = 0.0;
+  }
+};
+
+
 int main(int argc, char* argv[])
 {
   if (argc != 2)
@@ -50,8 +78,13 @@ int main(int argc, char* argv[])
 
   double tau = tend/steps;
 
-  Vector<> y = { 1, 0 };  // initializer list
-  auto rhs = std::make_shared<MassSpring>(1.0, 1.0);
+  // MassSprint
+  // Vector<> y = { 1, 0 };  // initializer list
+  // auto rhs = std::make_shared<MassSpring>(1.0, 1.0);
+
+  // Electric Circuit
+  Vector<> y = { 0, 0 };  // initializer list
+  auto rhs = std::make_shared<ElectricNetwork>(1.0, 1.0);
 
 
 
@@ -64,12 +97,12 @@ int main(int argc, char* argv[])
 
 
 
-  // ExplicitEuler stepper(rhs);
+  ExplicitEuler stepper(rhs);
   // ImplicitEuler stepper(rhs);
   // ImprovedEuler stepper(rhs);
   //CrankNicolson stepper(rhs);
 
-   ExplicitRungeKutta stepper(rhs, Gauss2a, Gauss2b, Gauss2c);
+  //  ExplicitRungeKutta stepper(rhs, Gauss2a, Gauss2b, Gauss2c);
 
   // Gauss3c .. points tabulated, compute a,b:
   auto [Gauss3a,Gauss3b] = ComputeABfromC (Gauss3c);
@@ -97,7 +130,8 @@ int main(int argc, char* argv[])
 
 
 
-  std::ofstream outfile ("../rungekutta_explicit.txt");
+  // std::ofstream outfile ("../rungekutta_explicit.txt");
+  std::ofstream outfile ("../ASC-ODE/demos/data/circuit_explicit.txt");
   std::cout << 0.0 << "  " << y(0) << " " << y(1) << " " << steps << std::endl;
   outfile << 0.0 << "  " << y(0) << " " << y(1) << " " << steps << std::endl;
 
