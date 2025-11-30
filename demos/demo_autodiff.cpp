@@ -1,5 +1,6 @@
 #include <iostream>
 #include <autodiff.hpp>
+#include <vector>
 
 
 using namespace ASC_ode;
@@ -10,6 +11,21 @@ T func1 (T x, T y)
 {
   return x * sin(y);
   // return 1e6 + y;
+}
+
+template <typename T>
+  void LegendrePolynomials(int n, T x, std::vector<T>& P) {
+  if (n < 0) {
+    P.clear();
+    return;
+  }
+  P.resize(n + 1);
+  P[0] = T(1);
+  if (n == 0) return;
+  P[1] = x;
+  for (int k = 2; k <= n; ++k) {
+    P[k] = ((T(2 * k - 1) * x * P[k - 1]) - T(k - 1) * P[k - 2]) / T(k);
+  }
 }
 
 
@@ -45,4 +61,15 @@ int main()
     // std::cout << "sin(addx) = " << sin(addx) << std::endl;
   }
   return 0;
+
+  // Evaluate and plot Legendre-polynomials up to order 5, in the interval -1<=x<=1
+  // Evaluate and plot also their derivatives (using AutoDiff)
+
+  for (int n = 0; n <= 5; ++n) {
+    std::vector<double> P;
+    LegendrePolynomials(n, 0.5, P);
+    std::cout << "P_" << n << " = " << P << std::endl;
+  }
+
+
 }

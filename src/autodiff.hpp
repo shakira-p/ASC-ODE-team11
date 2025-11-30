@@ -93,6 +93,49 @@ namespace ASC_ode
        return result;
    }
 
+  // Add additional useful operators for the AutoDiff class
+  // operator-, operator/, operator
+  //
+  // Add some more functions (cos, exp, log, …) for the AutoDiff class.
+  //
+  // Evaluate and plot Legendre-polynomials up to order 5, in the interval -1 <=x<= 1
+  // Evaluate and plot also their derivatives (using AutoDiff).
+  //
+  // Legendre polynomials are recursively defined:
+  // unary minus: -ad
+  template <size_t N, typename T = double>
+  AutoDiff<N, T> operator- (const AutoDiff<N, T>& a)
+  {
+    AutoDiff<N, T> result(-a.value());
+    for (size_t i = 0; i < N; ++i)
+      result.deriv()[i] = -a.deriv()[i];
+    return result;
+  }
+
+  // binary subtraction: ad1 - ad2
+  template <size_t N, typename T = double>
+  AutoDiff<N, T> operator- (const AutoDiff<N, T>& a, const AutoDiff<N, T>& b)
+  {
+    AutoDiff<N, T> result(a.value() - b.value());
+    for (size_t i = 0; i < N; ++i)
+      result.deriv()[i] = a.deriv()[i] - b.deriv()[i];
+    return result;
+  }
+
+  // division: ad1 / ad2
+  template <size_t N, typename T = double>
+  AutoDiff<N, T> operator/ (const AutoDiff<N, T>& a, const AutoDiff<N, T>& b)
+  {
+    AutoDiff<N, T> result(a.value() / b.value());
+    T denom = b.value() * b.value();
+    for (size_t i = 0; i < N; ++i)
+      result.deriv()[i] = (a.deriv()[i] * b.value() - a.value() * b.deriv()[i]) / denom;
+    return result;
+  }
+
+  template <size_t N, typename T = double>
+  auto operator/ (T a, const AutoDiff<N, T>& b) { return AutoDiff<N, T>(a) / b; }
+
    using std::sin;
    using std::cos;
 
@@ -104,6 +147,29 @@ namespace ASC_ode
            result.deriv()[i] = cos(a.value()) * a.deriv()[i];
        return result;
    }
+
+  // add math functions using chain rule
+  using std::exp;
+  using std::log;
+
+  template <size_t N, typename T = double>
+  AutoDiff<N, T> exp(const AutoDiff<N, T>& a)
+  {
+    T v = exp(a.value());
+    AutoDiff<N, T> result(v);
+    for (size_t i = 0; i < N; ++i)
+      result.deriv()[i] = v * a.deriv()[i]; // d/dx exp(u) = exp(u)*u'
+    return result;
+  }
+
+  template <size_t N, typename T = double>
+  AutoDiff<N, T> log(const AutoDiff<N, T>& a)
+  {
+    AutoDiff<N, T> result(log(a.value()));
+    for (size_t i = 0; i < N; ++i)
+      result.deriv()[i] = a.deriv()[i] / a.value(); // d/dx log(u) = u'/u
+    return result;
+  }
 
 
 } // namespace ASC_ode
