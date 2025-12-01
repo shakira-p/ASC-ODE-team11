@@ -20,7 +20,6 @@ target_link_libraries (demo_autodiff PUBLIC nanoblas)
 add_executable (test_autodiff demos/test_autodiff.cpp)
 target_link_libraries (test_autodiff PUBLIC nanoblas)
 
-add_executable(test_pendulum test_pendulum.cpp
-        demos/test_pendulum.cpp)
-target_link_libraries(test_pendulum autodiff nonlinfunc timestepper vector)
+add_executable(test_pendulum demos/test_pendulum.cpp)
+target_link_libraries(test_pendulum PUBLIC nanoblas)
 

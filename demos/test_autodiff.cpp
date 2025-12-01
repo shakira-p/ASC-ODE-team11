@@ -89,8 +89,8 @@ int main(int argc, char* argv[])
       std::cout << "," << P[n].value() << "," << P[n].deriv()[0];
     }
     std::cout << std::endl;
-  std::cout << std::string(80, '=') << std::endl;
+    std::cout << std::string(80, '=') << std::endl;
 
-  return 0;
+    return 0;
+  }
 }
-
