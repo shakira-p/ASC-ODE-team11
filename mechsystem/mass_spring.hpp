@@ -28,13 +28,19 @@ public:
   Vec<D> pos;
 };
 
-
 class Connector
 {
 public:
   enum CONTYPE { FIX=1, MASS=2 };
   CONTYPE type;
   size_t nr;
+};
+
+class DistanceConstraint
+{
+public:
+  double length;
+  std::array<Connector,2> connectors;
 };
 
 std::ostream & operator<< (std::ostream & ost, const Connector & con)
@@ -58,9 +64,18 @@ class MassSpringSystem
   std::vector<Mass<D>> m_masses;
   std::vector<Spring> m_springs;
   Vec<D> m_gravity=0.0;
+  std::vector<DistanceConstraint> m_constraints;
 public:
   void setGravity (Vec<D> gravity) { m_gravity = gravity; }
   Vec<D> getGravity() const { return m_gravity; }
+
+  size_t addConstraint(DistanceConstraint c)
+  {
+    m_constraints.push_back(c);
+    return m_constraints.size()-1;
+  }
+
+  auto & constraints() { return m_constraints; }
 
   Connector addFix (Fix<D> p)
   {
