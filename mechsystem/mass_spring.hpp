@@ -3,6 +3,7 @@
 
 #include <nonlinfunc.hpp>
 #include <timestepper.hpp>
+#include <autodiff.hpp>
 
 using namespace ASC_ode;
 
@@ -155,10 +156,16 @@ public:
   MSS_Function (MassSpringSystem<D> & _mss)
     : mss(_mss) { }
 
-  virtual size_t dimX() const override { return D*mss.masses().size(); }
-  virtual size_t dimF() const override{ return D*mss.masses().size(); }
+  virtual size_t dimX() const { return D*mss.masses().size(); }
+  virtual size_t dimF() const { return D*mss.masses().size(); }
 
   virtual void evaluate (VectorView<double> x, VectorView<double> f) const override
+  {
+    evaluateT(x, f);
+  }
+
+  template <typename T>
+  void evaluateT (VectorView<T> x, VectorView<T> f) const
   {
     f = 0.0;
 
@@ -171,7 +178,7 @@ public:
     for (auto spring : mss.springs())
       {
         auto [c1,c2] = spring.connectors;
-        Vec<D> p1, p2;
+        Vec<D, T> p1, p2;
         if (c1.type == Connector::FIX)
           p1 = mss.fixes()[c1.nr].pos;
         else
@@ -181,8 +188,10 @@ public:
         else
           p2 = xmat.row(c2.nr);
 
-        double force = spring.stiffness * (norm(p1-p2)-spring.length);
-        Vec<D> dir12 = 1.0/norm(p1-p2) * (p2-p1);
+        T dist = norm(p1 - p2);
+        T force = spring.stiffness * (dist - spring.length);
+        Vec<D, T> dir12 = T(1.0)/ dist * (p2-p1);
+
         if (c1.type == Connector::MASS)
           fmat.row(c1.nr) += force*dir12;
         if (c2.type == Connector::MASS)
@@ -190,24 +199,42 @@ public:
       }
 
     for (size_t i = 0; i < mss.masses().size(); i++)
-      fmat.row(i) *= 1.0/mss.masses()[i].mass;
+      fmat.row(i) *= T(1.0)/mss.masses()[i].mass;
   }
-  
+
+  // template <typename T>
   virtual void evaluateDeriv (VectorView<double> x, MatrixView<double> df) const override
   {
     // TODO: exact differentiation
-    double eps = 1e-8;
-    Vector<> xl(dimX()), xr(dimX()), fl(dimF()), fr(dimF());
-    for (size_t i = 0; i < dimX(); i++)
-      {
-        xl = x;
-        xl(i) -= eps;
-        xr = x;
-        xr(i) += eps;
-        evaluate (xl, fl);
-        evaluate (xr, fr);
-        df.col(i) = 1/(2*eps) * (fr-fl);
-      }
+    const size_t N = dimX();
+
+    Vector<AutoDiff<N>> xad(N);
+    for (size_t i=0; i<N; i++)
+    {
+      xad(i) = AutoDiff<N>(x(i));  // no {} because one-liner
+      xad(i).deriv()[i] = 1.0;  // wtf really setting manually?
+    }
+
+    Vector<AutoDiff<N>> fad(dimF());
+    evaluateT(xad.view(), fad.view());
+
+    for (size_t i = 0; i < dimF(); i++)
+      for (size_t j = 0; j < N; j++)
+        df(i,j) = derivative(fad(i), j);
+
+    //////
+    // double eps = 1e-8;
+    // Vector<> xl(dimX()), xr(dimX()), fl(dimF()), fr(dimF());
+    // for (size_t i = 0; i < dimX(); i++)
+    //   {
+    //     xl = x;
+    //     xl(i) -= eps;
+    //     xr = x;
+    //     xr(i) += eps;
+    //     evaluateT (xl, fl);
+    //     evaluateT (xr, fr);
+    //     df.col(i) = 1/(2*eps) * (fr-fl);
+    //   }
   }
   
 };
