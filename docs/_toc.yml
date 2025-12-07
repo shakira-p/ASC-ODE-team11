@@ -2,7 +2,28 @@
 # Learn more at https://jupyterbook.org/customize/toc.html
 
 format: jb-book
-root: intro.md
+root: overview.md
+
+parts:
+  - caption: Stepper Implementations
+    numbered: True
+    chapters:
+      - file: files/stepper/explicit_euler.md
+      - file: files/stepper/implicit_euler.md
+      - file: files/stepper/crank.md
+      - file: files/stepper/newton_solver.md
+      - file: files/stepper/runge_kutta.md
+  - caption: Applications
+    numbered: True
+    chapters:
+      - file: files/impl/nonlinear.md.md
+      - file: files/impl/autodiff.md
+  - caption: Applications
+    numbered: True
+    chapters:
+      - file: files/application/pendulum.md
+      - file: files/application/mass_spring.md
+      - file: files/application/electric_network.md
 
 
 
