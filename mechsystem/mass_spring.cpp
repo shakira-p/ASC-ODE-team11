@@ -1,5 +1,7 @@
 #include "mass_spring.hpp"
 #include "Newmark.hpp"
+#include <iostream>
+#include <memory>
 
 int main()
 {

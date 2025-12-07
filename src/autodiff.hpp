@@ -5,6 +5,7 @@
 #include <ostream>
 #include <cmath>
 #include <array>
+#include <vector>
 
 
 namespace ASC_ode
@@ -36,6 +37,11 @@ namespace ASC_ode
     {
       for (size_t i = 0; i < N; i++)
         m_deriv[i] = derivative(v, i);
+    }
+
+    AutoDiff(T val, size_t derivIndex) : m_val(val), m_deriv{}
+    {
+      m_deriv[derivIndex] = T(1);
     }
     
     template <size_t I>
@@ -108,6 +114,10 @@ namespace ASC_ode
   //
   // Legendre polynomials are recursively defined:
   // unary minus: -ad
+
+  // * operator for scalar and matrix
+
+
   template <size_t N, typename T = double>
   AutoDiff<N, T> operator- (const AutoDiff<N, T>& a)
   {
@@ -127,6 +137,20 @@ namespace ASC_ode
     return result;
   }
 
+  // AutoDiff - scalar
+  template <size_t N, typename T = double>
+  AutoDiff<N, T> operator- (const AutoDiff<N, T>& a, T b)
+  {
+    return a - AutoDiff<N, T>(b);
+  }
+
+  // scalar - AutoDiff
+  template <size_t N, typename T = double>
+  AutoDiff<N, T> operator- (T a, const AutoDiff<N, T>& b)
+  {
+    return AutoDiff<N, T>(a) - b;
+  }
+
   // division: ad1 / ad2
   template <size_t N, typename T = double>
   AutoDiff<N, T> operator/ (const AutoDiff<N, T>& a, const AutoDiff<N, T>& b)
@@ -136,6 +160,43 @@ namespace ASC_ode
     for (size_t i = 0; i < N; ++i)
       result.deriv()[i] = (a.deriv()[i] * b.value() - a.value() * b.deriv()[i]) / denom;
     return result;
+  }
+
+  // AutoDiff / scalar
+  template <size_t N, typename T = double>
+  AutoDiff<N, T> operator/ (const AutoDiff<N, T>& a, T b)
+  {
+    return a / AutoDiff<N, T>(b);
+  }
+
+  // operator +=
+  template <size_t N, typename T = double>
+  auto operator+= (AutoDiff<N, T>& a, const AutoDiff<N, T>& b)
+  {
+    a = a + b;
+    return a;
+  }
+
+  template <size_t N, typename T = double>
+  auto operator-= (AutoDiff<N, T>& a, const AutoDiff<N, T>& b)
+  {
+    a = a - b;
+    return a;
+  }
+
+  template <size_t N, typename T = double>
+  auto operator*= (AutoDiff<N, T>& a, const AutoDiff<N, T>& b)
+  {
+    a = a * b;
+    return a;
+  }
+
+  // operator +=
+  template <size_t N, typename T = double>
+  auto operator/= (AutoDiff<N, T>& a, const AutoDiff<N, T>& b)
+  {
+    a = a / b;
+    return a;
   }
 
   template <size_t N, typename T = double>
@@ -174,6 +235,25 @@ namespace ASC_ode
     for (size_t i = 0; i < N; ++i)
       result.deriv()[i] = a.deriv()[i] / a.value(); // d/dx log(u) = u'/u
     return result;
+  }
+
+  using std::sqrt;
+
+  template <size_t N, typename T = double>
+  AutoDiff<N, T> sqrt(const AutoDiff<N, T>& a)
+  {
+    T v = sqrt(a.value());
+    AutoDiff<N, T> result(v);
+    for (size_t i = 0; i < N; ++i)
+      result.deriv()[i] = a.deriv()[i] / (T(2) * v);  // d/dx sqrt(u) = u'/(2*sqrt(u))
+    return result;
+  }
+
+  // norm2 for scalar AutoDiff (squared magnitude, used by nanoblas internally)
+  template <size_t N, typename T = double>
+  AutoDiff<N, T> norm2(const AutoDiff<N, T>& a)
+  {
+    return a * a;  // For real numbers, |x|^2 = x^2
   }
 
 
