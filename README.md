@@ -1,7 +1,7 @@
 # ASC-ODE
 A package for solving ordinary differential equations
 
-Read the [documentation](https://tuwien-asc.github.io/ASC-ODE/intro.html)
+Read the [documentation](https://shakira-p.github.io/ASC-ODE-team11/overview.html)
 
 Find theory behind here: https://jschoeberl.github.io/IntroSC/ODEs/ODEs.html
 
