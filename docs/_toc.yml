@@ -9,6 +9,7 @@ parts:
     numbered: True
     chapters:
       - file: files/stepper/explicit_euler.md
+      - file: files/stepper/improved_euler.md
       - file: files/stepper/implicit_euler.md
       - file: files/stepper/crank.md
       - file: files/stepper/newton_solver.md
