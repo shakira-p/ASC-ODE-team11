@@ -190,39 +190,55 @@ public:
 
         T dist = norm(p1 - p2);
         T force = spring.stiffness * (dist - spring.length);
-        Vec<D, T> dir12 = T(1.0)/ dist * (p2-p1);
+        Vec<D, T> diff = p2 - p1;
+        T inv_dist = T(1.0) / dist;
+        Vec<D, T> dir12;
+        for (int i = 0; i < D; i++)
+          dir12(i) = inv_dist * diff(i);
+
+        Vec<D, T> force_vec;
+        for (int i = 0; i < D; i++)
+          force_vec(i) = force * dir12(i);
 
         if (c1.type == Connector::MASS)
-          fmat.row(c1.nr) += force*dir12;
+          for (int i = 0; i < D; i++)
+            fmat.row(c1.nr)(i) = fmat.row(c1.nr)(i) + force_vec(i);
         if (c2.type == Connector::MASS)
-          fmat.row(c2.nr) -= force*dir12;
+          for (int i = 0; i < D; i++)
+            fmat.row(c2.nr)(i) = fmat.row(c2.nr)(i) - force_vec(i);
       }
 
     for (size_t i = 0; i < mss.masses().size(); i++)
       fmat.row(i) *= T(1.0)/mss.masses()[i].mass;
   }
 
+  static constexpr size_t MAX_N = 16;  // Compile-time constant
   // template <typename T>
   virtual void evaluateDeriv (VectorView<double> x, MatrixView<double> df) const override
   {
     // TODO: exact differentiation
     const size_t N = dimX();
 
-    Vector<AutoDiff<N>> xad(N);
+    Vector<AutoDiff<MAX_N>> xad(N);
     for (size_t i=0; i<N; i++)
     {
-      xad(i) = AutoDiff<N>(x(i));  // no {} because one-liner
-      xad(i).deriv()[i] = 1.0;  // wtf really setting manually?
+      xad(i) = AutoDiff<MAX_N>(x(i));
+      // xad(i).deriv()[i] = AutoDiff<N>(x(i), i);
     }
+    Vector<AutoDiff<MAX_N>> fad(dimF());
 
-    Vector<AutoDiff<N>> fad(dimF());
-    evaluateT(xad.view(), fad.view());
+    // Create VectorView manually from the data pointer
+    VectorView<AutoDiff<MAX_N>> xad_view(N, xad.data());
+    VectorView<AutoDiff<MAX_N>> fad_view(dimF(), fad.data());
+
+    evaluateT(xad_view, fad_view);
+    // evaluateT(xad.view(), fad.view());
 
     for (size_t i = 0; i < dimF(); i++)
       for (size_t j = 0; j < N; j++)
         df(i,j) = derivative(fad(i), j);
 
-    //////
+    //// Numerical differentiation
     // double eps = 1e-8;
     // Vector<> xl(dimX()), xr(dimX()), fl(dimF()), fr(dimF());
     // for (size_t i = 0; i < dimX(); i++)
