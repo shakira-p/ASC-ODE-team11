@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>6. AutoDiff Class &#8212; ASC-ODE</title>
+    <title>9. AutoDiff Class &#8212; ASC-ODE</title>
   
   
   
@@ -60,8 +60,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'files/impl/autodiff';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="7. Pendulum" href="../application/pendulum.html" />
-    <link rel="prev" title="5. Runge Kutta Methods" href="../stepper/runge_kutta.html" />
+    <link rel="next" title="10. Mass Spring System" href="../application/mass_spring.html" />
+    <link rel="prev" title="8. Nonlinear Function Class" href="nonlinear.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -182,20 +182,22 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Stepper Implementations</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../stepper/explicit_euler.html">1. Explicit Euler</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../stepper/implicit_euler.html">2. Implicit Euler</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../stepper/crank.html">3. Crank Nicholason Stepper</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../stepper/newton_solver.html">4. Newton Solver</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../stepper/runge_kutta.html">5. Runge Kutta Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../stepper/improved_euler.html">2. Improved Euler Method (Heun’s Method)</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../stepper/implicit_euler.html">4. Implicit Euler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../stepper/crank.html">5. Crank-Nicolson Method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../stepper/newton_solver.html">6. Newton Solver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../stepper/runge_kutta.html">7. Runge Kutta Methods</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Applications</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">6. AutoDiff Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nonlinear.html">8. Nonlinear Function Class</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">9. AutoDiff Class</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Applications</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../application/pendulum.html">7. Pendulum</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../application/mass_spring.html">8. Mass Spring System</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../application/electric_network.html">9. Electric Network Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../application/mass_spring.html">10. Mass Spring System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../application/electric_network.html">11. Electric Network Model</a></li>
 </ul>
 
     </div>
@@ -362,7 +364,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="autodiff-class">
-<h1><span class="section-number">6. </span>AutoDiff Class<a class="headerlink" href="#autodiff-class" title="Link to this heading">#</a></h1>
+<h1><span class="section-number">9. </span>AutoDiff Class<a class="headerlink" href="#autodiff-class" title="Link to this heading">#</a></h1>
 </section>
 
     <script type="text/x-thebe-config">
@@ -396,20 +398,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../stepper/runge_kutta.html"
+       href="nonlinear.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">5. </span>Runge Kutta Methods</p>
+        <p class="prev-next-title"><span class="section-number">8. </span>Nonlinear Function Class</p>
       </div>
     </a>
     <a class="right-next"
-       href="../application/pendulum.html"
+       href="../application/mass_spring.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">7. </span>Pendulum</p>
+        <p class="prev-next-title"><span class="section-number">10. </span>Mass Spring System</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

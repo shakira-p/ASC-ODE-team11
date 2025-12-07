@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>6. Newton Solver &#8212; ASC-ODE</title>
+    <title>2. Improved Euler Method (Heun’s Method) &#8212; ASC-ODE</title>
   
   
   
@@ -59,11 +59,11 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'files/stepper/newton_solver';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'files/stepper/improved_euler';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="7. Runge Kutta Methods" href="runge_kutta.html" />
-    <link rel="prev" title="5. Crank-Nicolson Method" href="crank.html" />
+    <link rel="next" title="4. Implicit Euler" href="implicit_euler.html" />
+    <link rel="prev" title="1. Explicit Euler" href="explicit_euler.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -184,11 +184,11 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Stepper Implementations</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="explicit_euler.html">1. Explicit Euler</a></li>
-<li class="toctree-l1"><a class="reference internal" href="improved_euler.html">2. Improved Euler Method (Heun’s Method)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">2. Improved Euler Method (Heun’s Method)</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="implicit_euler.html">4. Implicit Euler</a></li>
 <li class="toctree-l1"><a class="reference internal" href="crank.html">5. Crank-Nicolson Method</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">6. Newton Solver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="newton_solver.html">6. Newton Solver</a></li>
 <li class="toctree-l1"><a class="reference internal" href="runge_kutta.html">7. Runge Kutta Methods</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Applications</span></p>
@@ -269,7 +269,7 @@
       
       
       
-      <li><a href="../../_sources/files/stepper/newton_solver.md" target="_blank"
+      <li><a href="../../_sources/files/stepper/improved_euler.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -353,7 +353,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Newton Solver</h1>
+    <h1>Improved Euler Method (Heun’s Method)</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -363,12 +363,25 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">6.1. Introduction</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-overview">6.2. Mathematical Overview</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation">6.3. Implementation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters">6.4. Parameters</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#behavior">6.5. Behavior</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">2. Improved Euler Method (Heun’s Method)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">2.1. Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-overview">2.2. Mathematical Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation">2.3. Implementation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#constructor-parameters">2.3.1. Constructor Parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dostep-parameters">2.3.2. DoStep Parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-features">2.3.3. Key Features</a></li>
 </ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#improved-euler">3. Improved Euler</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definition">3.1. Definition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code">3.2. Code</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#results">3.3. Results</a></li>
+</ul>
+</li>
+</ul>
+
             </nav>
         </div>
     </div>
@@ -379,42 +392,81 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="newton-solver">
-<h1><span class="section-number">6. </span>Newton Solver<a class="headerlink" href="#newton-solver" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="improved-euler-method-heun-s-method">
+<h1><span class="section-number">2. </span>Improved Euler Method (Heun’s Method)<a class="headerlink" href="#improved-euler-method-heun-s-method" title="Link to this heading">#</a></h1>
 <section id="introduction">
-<h2><span class="section-number">6.1. </span>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
-<p>The Newton solver is a numerical method for finding roots of nonlinear systems of equations. It iteratively refines an initial guess until the residual falls below a specified tolerance.</p>
+<h2><span class="section-number">2.1. </span>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<p>The Improved Euler method, also known as Heun’s method, is an explicit second-order Runge-Kutta scheme. It uses a predictor-corrector approach to achieve better accuracy than the standard Euler method.</p>
 </section>
 <section id="mathematical-overview">
-<h2><span class="section-number">6.2. </span>Mathematical Overview<a class="headerlink" href="#mathematical-overview" title="Link to this heading">#</a></h2>
-<p>Given a nonlinear function <span class="math notranslate nohighlight">\(F: \mathbb{R}^n \to \mathbb{R}^m\)</span>, the Newton method finds <span class="math notranslate nohighlight">\(x^*\)</span> such that <span class="math notranslate nohighlight">\(F(x^*) = 0\)</span> using the iteration:</p>
+<h2><span class="section-number">2.2. </span>Mathematical Overview<a class="headerlink" href="#mathematical-overview" title="Link to this heading">#</a></h2>
+<p>Given an ODE <span class="math notranslate nohighlight">\(\frac{dy}{dt} = f(t, y)\)</span>, the method computes the solution at time <span class="math notranslate nohighlight">\(t_{n+1} = t_n + \tau\)</span> using:</p>
 <div class="math notranslate nohighlight">
-\[x_{k+1} = x_k - J_F(x_k)^{-1} F(x_k)\]</div>
-<p>where <span class="math notranslate nohighlight">\(J_F(x_k)\)</span> is the Jacobian matrix of <span class="math notranslate nohighlight">\(F\)</span> evaluated at <span class="math notranslate nohighlight">\(x_k\)</span>.</p>
-<p>The iteration continues until <span class="math notranslate nohighlight">\(\|F(x_k)\| &lt; \text{tol}\)</span> or the maximum number of steps is reached.</p>
+\[\hat{y} = y_n + \frac{\tau}{2} f(t_n, y_n)\]</div>
+<div class="math notranslate nohighlight">
+\[y_{n+1} = y_n + \tau \cdot f\left(t_n + \frac{\tau}{2}, \hat{y}\right)\]</div>
+<p>The method first evaluates <span class="math notranslate nohighlight">\(f\)</span> at the current point, then at a midpoint predictor <span class="math notranslate nohighlight">\(\hat{y}\)</span>, and uses this slope for the final update.</p>
 </section>
 <section id="implementation">
-<h2><span class="section-number">6.3. </span>Implementation<a class="headerlink" href="#implementation" title="Link to this heading">#</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">NewtonSolver</span></code> function implements this method with the following signature:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="n">NewtonSolver</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">NonlinearFunction</span><span class="o">&gt;</span><span class="w"> </span><span class="n">func</span><span class="p">,</span><span class="w"> </span><span class="n">VectorView</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">x</span><span class="p">,</span>
-<span class="w">                  </span><span class="kt">double</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e-10</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">maxsteps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
-<span class="w">                  </span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="kt">double</span><span class="p">,</span><span class="n">VectorView</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">)</span><span class="o">&gt;</span><span class="w"> </span><span class="n">callback</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span>
+<h2><span class="section-number">2.3. </span>Implementation<a class="headerlink" href="#implementation" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">ImprovedEuler</span></code> class inherits from <code class="docutils literal notranslate"><span class="pre">TimeStepper</span></code> and performs explicit time integration.</p>
+<section id="constructor-parameters">
+<h3><span class="section-number">2.3.1. </span>Constructor Parameters<a class="headerlink" href="#constructor-parameters" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rhs</span></code>: A <code class="docutils literal notranslate"><span class="pre">NonlinearFunction</span></code> representing <span class="math notranslate nohighlight">\(f(t, y)\)</span></p></li>
+</ul>
+</section>
+<section id="dostep-parameters">
+<h3><span class="section-number">2.3.2. </span>DoStep Parameters<a class="headerlink" href="#dostep-parameters" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">tau</span></code>: Time step size <span class="math notranslate nohighlight">\(\tau\)</span></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: Current solution vector (modified in-place to contain <span class="math notranslate nohighlight">\(y_{n+1}\)</span>)</p></li>
+</ul>
+</section>
+<section id="key-features">
+<h3><span class="section-number">2.3.3. </span>Key Features<a class="headerlink" href="#key-features" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Stores intermediate values in <code class="docutils literal notranslate"><span class="pre">m_vecf</span></code> (function evaluations) and <code class="docutils literal notranslate"><span class="pre">m_y_hat</span></code> (predictor point)</p></li>
+<li><p>Fully explicit: no nonlinear solve required</p></li>
+<li><p>Second-order accurate like Crank-Nicolson, but not unconditionally stable</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="improved-euler">
+<h1><span class="section-number">3. </span>Improved Euler<a class="headerlink" href="#improved-euler" title="Link to this heading">#</a></h1>
+<section id="definition">
+<h2><span class="section-number">3.1. </span>Definition<a class="headerlink" href="#definition" title="Link to this heading">#</a></h2>
+<p><span class="math notranslate nohighlight">\(y^{\sim} = y_n + \frac{\tau}{2}f(y_n)\)</span>
+<span class="math notranslate nohighlight">\(y_{n+1} = y_n + \tau f(y^{\sim})\)</span></p>
+</section>
+<section id="code">
+<h2><span class="section-number">3.2. </span>Code<a class="headerlink" href="#code" title="Link to this heading">#</a></h2>
+<p>In the improved euler method, we first evaluate the function at the current point y to get an estimate of the slope. We then use this slope to compute an intermediate point y_hat halfway through the time step. Finally,
+we evaluate the function at this intermediate point and use that value to update y for the full time step.
+We continue this process for each time step until we reach the desired end time.</p>
+<p>Here’s how the evalutation in the timestepper is implemented in C++:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">evaluating</span> <span class="n">f</span> <span class="n">at</span> <span class="n">current</span> <span class="n">y</span>
+<span class="n">this</span><span class="o">-&gt;</span><span class="n">m_rhs</span><span class="o">-&gt;</span><span class="n">evaluate</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">m_vecf</span><span class="p">);</span>
+
+<span class="o">//</span> <span class="n">intermediate</span> <span class="n">point</span>
+<span class="n">m_y_hat</span> <span class="o">=</span> <span class="n">y</span><span class="p">;</span>
+<span class="n">m_y_hat</span> <span class="o">+=</span> <span class="n">tau</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="n">m_vecf</span><span class="p">;</span>
+
+<span class="o">//</span> <span class="n">evaluating</span> <span class="n">at</span> <span class="n">y_hat</span>
+<span class="n">this</span><span class="o">-&gt;</span><span class="n">m_rhs</span><span class="o">-&gt;</span><span class="n">evaluate</span><span class="p">(</span><span class="n">m_y_hat</span><span class="p">,</span> <span class="n">m_vecf</span><span class="p">);</span>
+
+<span class="o">//</span> <span class="n">actual</span> <span class="n">update</span><span class="p">:</span> <span class="n">y</span> <span class="o">+=</span> <span class="n">tau</span> <span class="o">*</span> <span class="n">f</span><span class="p">(</span><span class="n">y_hat</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">+=</span> <span class="n">tau</span> <span class="o">*</span> <span class="n">m_vecf</span><span class="p">;</span>
 </pre></div>
 </div>
 </section>
-<section id="parameters">
-<h2><span class="section-number">6.4. </span>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>func: A NonlinearFunction object that provides evaluate() for <span>F(x)</span> and evaluateDeriv() for the Jacobian <span>J_F(x)</span></p></li>
-<li><p>x: Initial guess vector (modified in-place to contain the solution)</p></li>
-<li><p>tol: Convergence tolerance for the residual norm (default: <span>10^{-10}</span>)</p></li>
-<li><p>maxsteps: Maximum number of Newton iterations (default: 10)</p></li>
-<li><p>callback: Optional function called at each iteration with (iteration, error, current_x)</p></li>
-</ul>
-</section>
-<section id="behavior">
-<h2><span class="section-number">6.5. </span>Behavior<a class="headerlink" href="#behavior" title="Link to this heading">#</a></h2>
-<p>The solver computes the Jacobian, inverts it, and updates the solution vector until convergence or reaching maxsteps. If convergence fails, a std::domain_error exception is thrown.</p>
+<section id="results">
+<h2><span class="section-number">3.3. </span>Results<a class="headerlink" href="#results" title="Link to this heading">#</a></h2>
+<p>Below is a phase plot for a mass-spring system solved using the Improved Euler method.</p>
+<p>First the system phase plot and time evolution using the Improved Euler method with step size h=0.1:</p>
+<p><img alt="Mass Spring Phase Plot Improved Euler Method" src="docs/plots/MassSpringPhasePlot_improved.png" /></p>
+<p><img alt="Mass Spring System Time Evolution Improved Euler Method" src="docs/plots/MassSpringSystemTimeEvolution_improved.png" /></p>
 </section>
 </section>
 
@@ -449,20 +501,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="crank.html"
+       href="explicit_euler.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">5. </span>Crank-Nicolson Method</p>
+        <p class="prev-next-title"><span class="section-number">1. </span>Explicit Euler</p>
       </div>
     </a>
     <a class="right-next"
-       href="runge_kutta.html"
+       href="implicit_euler.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">7. </span>Runge Kutta Methods</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>Implicit Euler</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -482,12 +534,25 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">6.1. Introduction</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-overview">6.2. Mathematical Overview</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation">6.3. Implementation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters">6.4. Parameters</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#behavior">6.5. Behavior</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">2. Improved Euler Method (Heun’s Method)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">2.1. Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-overview">2.2. Mathematical Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation">2.3. Implementation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#constructor-parameters">2.3.1. Constructor Parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dostep-parameters">2.3.2. DoStep Parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-features">2.3.3. Key Features</a></li>
 </ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#improved-euler">3. Improved Euler</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definition">3.1. Definition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code">3.2. Code</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#results">3.3. Results</a></li>
+</ul>
+</li>
+</ul>
+
   </nav></div>
 
 </div></div>
