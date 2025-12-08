@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>6. Newton Solver &#8212; ASC-ODE</title>
+    <title>5. Newton Solver &#8212; ASC-ODE</title>
   
   
   
@@ -62,8 +62,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'files/stepper/newton_solver';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="7. Runge Kutta Methods" href="runge_kutta.html" />
-    <link rel="prev" title="5. Crank-Nicolson Method" href="crank.html" />
+    <link rel="next" title="6. Runge Kutta Methods" href="runge_kutta.html" />
+    <link rel="prev" title="4. Crank-Nicolson Method" href="crank.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -185,21 +185,20 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="explicit_euler.html">1. Explicit Euler</a></li>
 <li class="toctree-l1"><a class="reference internal" href="improved_euler.html">2. Improved Euler Method (Heun’s Method)</a></li>
-
-<li class="toctree-l1"><a class="reference internal" href="implicit_euler.html">4. Implicit Euler</a></li>
-<li class="toctree-l1"><a class="reference internal" href="crank.html">5. Crank-Nicolson Method</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">6. Newton Solver</a></li>
-<li class="toctree-l1"><a class="reference internal" href="runge_kutta.html">7. Runge Kutta Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implicit_euler.html">3. Implicit Euler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crank.html">4. Crank-Nicolson Method</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">5. Newton Solver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="runge_kutta.html">6. Runge Kutta Methods</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Applications</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../impl/nonlinear.html">8. Nonlinear Function Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../impl/autodiff.html">9. AutoDiff Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../impl/nonlinear.html">7. Nonlinear Function Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../impl/autodiff.html">8. Automatic Differentiation (AutoDiff)</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Applications</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../application/mass_spring.html">10. Mass Spring System</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../application/electric_network.html">11. Electric Network Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../application/mass_spring.html">9. Mass Spring System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../application/electric_network.html">10. Electric Network Model</a></li>
 </ul>
 
     </div>
@@ -363,11 +362,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">6.1. Introduction</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-overview">6.2. Mathematical Overview</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation">6.3. Implementation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters">6.4. Parameters</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#behavior">6.5. Behavior</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">5.1. Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-overview">5.2. Mathematical Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation">5.3. Implementation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters">5.4. Parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#behavior">5.5. Behavior</a></li>
 </ul>
             </nav>
         </div>
@@ -380,13 +379,13 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="newton-solver">
-<h1><span class="section-number">6. </span>Newton Solver<a class="headerlink" href="#newton-solver" title="Link to this heading">#</a></h1>
+<h1><span class="section-number">5. </span>Newton Solver<a class="headerlink" href="#newton-solver" title="Link to this heading">#</a></h1>
 <section id="introduction">
-<h2><span class="section-number">6.1. </span>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">5.1. </span>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
 <p>The Newton solver is a numerical method for finding roots of nonlinear systems of equations. It iteratively refines an initial guess until the residual falls below a specified tolerance.</p>
 </section>
 <section id="mathematical-overview">
-<h2><span class="section-number">6.2. </span>Mathematical Overview<a class="headerlink" href="#mathematical-overview" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">5.2. </span>Mathematical Overview<a class="headerlink" href="#mathematical-overview" title="Link to this heading">#</a></h2>
 <p>Given a nonlinear function <span class="math notranslate nohighlight">\(F: \mathbb{R}^n \to \mathbb{R}^m\)</span>, the Newton method finds <span class="math notranslate nohighlight">\(x^*\)</span> such that <span class="math notranslate nohighlight">\(F(x^*) = 0\)</span> using the iteration:</p>
 <div class="math notranslate nohighlight">
 \[x_{k+1} = x_k - J_F(x_k)^{-1} F(x_k)\]</div>
@@ -394,7 +393,7 @@ document.write(`
 <p>The iteration continues until <span class="math notranslate nohighlight">\(\|F(x_k)\| &lt; \text{tol}\)</span> or the maximum number of steps is reached.</p>
 </section>
 <section id="implementation">
-<h2><span class="section-number">6.3. </span>Implementation<a class="headerlink" href="#implementation" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">5.3. </span>Implementation<a class="headerlink" href="#implementation" title="Link to this heading">#</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">NewtonSolver</span></code> function implements this method with the following signature:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="n">NewtonSolver</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">NonlinearFunction</span><span class="o">&gt;</span><span class="w"> </span><span class="n">func</span><span class="p">,</span><span class="w"> </span><span class="n">VectorView</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">x</span><span class="p">,</span>
 <span class="w">                  </span><span class="kt">double</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e-10</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">maxsteps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
@@ -403,7 +402,7 @@ document.write(`
 </div>
 </section>
 <section id="parameters">
-<h2><span class="section-number">6.4. </span>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">5.4. </span>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>func: A NonlinearFunction object that provides evaluate() for <span>F(x)</span> and evaluateDeriv() for the Jacobian <span>J_F(x)</span></p></li>
 <li><p>x: Initial guess vector (modified in-place to contain the solution)</p></li>
@@ -413,7 +412,7 @@ document.write(`
 </ul>
 </section>
 <section id="behavior">
-<h2><span class="section-number">6.5. </span>Behavior<a class="headerlink" href="#behavior" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">5.5. </span>Behavior<a class="headerlink" href="#behavior" title="Link to this heading">#</a></h2>
 <p>The solver computes the Jacobian, inverts it, and updates the solution vector until convergence or reaching maxsteps. If convergence fails, a std::domain_error exception is thrown.</p>
 </section>
 </section>
@@ -454,7 +453,7 @@ document.write(`
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">5. </span>Crank-Nicolson Method</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>Crank-Nicolson Method</p>
       </div>
     </a>
     <a class="right-next"
@@ -462,7 +461,7 @@ document.write(`
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">7. </span>Runge Kutta Methods</p>
+        <p class="prev-next-title"><span class="section-number">6. </span>Runge Kutta Methods</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -482,11 +481,11 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">6.1. Introduction</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-overview">6.2. Mathematical Overview</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation">6.3. Implementation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters">6.4. Parameters</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#behavior">6.5. Behavior</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">5.1. Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-overview">5.2. Mathematical Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation">5.3. Implementation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters">5.4. Parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#behavior">5.5. Behavior</a></li>
 </ul>
   </nav></div>
 

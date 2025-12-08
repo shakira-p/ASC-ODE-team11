@@ -2,13 +2,13 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../" >
+<html lang="en" data-content_root="./" >
 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>3. Implicit Euler &#8212; ASC-ODE</title>
+    <title>1. Numerical Simulation and Scientific Computing I &#8212; ASC-ODE</title>
   
   
   
@@ -18,52 +18,49 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../../_static/copybutton.js?v=f281be69"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'files/stepper/implicit_euler';</script>
-    <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="4. Crank-Nicolson Method" href="crank.html" />
-    <link rel="prev" title="2. Improved Euler Method (Heun’s Method)" href="improved_euler.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'REPORT_ex1';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to ASC-ODE’s documentation!" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -95,7 +92,7 @@
     <div class="search-button__overlay"></div>
     <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
-      action="../../search.html"
+      action="search.html"
       method="get">
   <i class="fa-solid fa-magnifying-glass"></i>
   <input type="search"
@@ -144,7 +141,7 @@
     
   
 
-<a class="navbar-brand logo" href="../../overview.html">
+<a class="navbar-brand logo" href="intro.html">
   
   
   
@@ -155,8 +152,8 @@
       
     
     
-    <img src="../../_static/ASC_Logo_transparent_300ppi_RGB.png" class="logo__image only-light" alt="ASC-ODE - Home"/>
-    <script>document.write(`<img src="../../_static/ASC_Logo_transparent_300ppi_RGB.png" class="logo__image only-dark" alt="ASC-ODE - Home"/>`);</script>
+    <img src="_static/ASC_Logo_transparent_300ppi_RGB.png" class="logo__image only-light" alt="ASC-ODE - Home"/>
+    <script>document.write(`<img src="_static/ASC_Logo_transparent_300ppi_RGB.png" class="logo__image only-dark" alt="ASC-ODE - Home"/>`);</script>
   
   
 </a></div>
@@ -176,29 +173,16 @@
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="../../overview.html">
-                    Documentation ASC-ODE Package
+                <a class="reference internal" href="intro.html">
+                    Welcome to ASC-ODE’s documentation!
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Stepper Implementations</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Improved Euler and Crank-Nicolson Methods</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="explicit_euler.html">1. Explicit Euler</a></li>
-<li class="toctree-l1"><a class="reference internal" href="improved_euler.html">2. Improved Euler Method (Heun’s Method)</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">3. Implicit Euler</a></li>
-<li class="toctree-l1"><a class="reference internal" href="crank.html">4. Crank-Nicolson Method</a></li>
-<li class="toctree-l1"><a class="reference internal" href="newton_solver.html">5. Newton Solver</a></li>
-<li class="toctree-l1"><a class="reference internal" href="runge_kutta.html">6. Runge Kutta Methods</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Applications</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../impl/nonlinear.html">7. Nonlinear Function Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../impl/autodiff.html">8. Automatic Differentiation (AutoDiff)</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Applications</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../application/mass_spring.html">9. Mass Spring System</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../application/electric_network.html">10. Electric Network Model</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">1. <center> Numerical Simulation and Scientific Computing I </center></a></li>
+
+
 </ul>
 
     </div>
@@ -268,7 +252,7 @@
       
       
       
-      <li><a href="../../_sources/files/stepper/implicit_euler.md" target="_blank"
+      <li><a href="_sources/REPORT_ex1.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -278,7 +262,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.md</span>
+<span class="btn__text-container">.ipynb</span>
 </a>
 </li>
       
@@ -352,7 +336,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Implicit Euler</h1>
+    <h1><center> Numerical Simulation and Scientific Computing I </center></h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -362,11 +346,16 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">3.1. Introduction</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-overview">3.2. Mathematical Overview</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation">3.3. Implementation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#results-for-mass-spring-system">3.4. Results for Mass-Spring System</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">1. <center> Numerical Simulation and Scientific Computing I </center></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#team-11">2. Team 11</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1">3. Part 1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#phase-plots">3.1. Phase plots</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-evolution">3.2. Time Evolution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">3.3. </a></li>
 </ul>
+</li>
+</ul>
+
             </nav>
         </div>
     </div>
@@ -377,35 +366,36 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="implicit-euler">
-<h1><span class="section-number">3. </span>Implicit Euler<a class="headerlink" href="#implicit-euler" title="Link to this heading">#</a></h1>
-<section id="introduction">
-<h2><span class="section-number">3.1. </span>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
-<p>The implicit Euler method, also known as the backward Euler method,
-is an implicit first-order time-stepping scheme for solving ordinary differential equations (ODEs).
-It is unconditionally stable and is particularly useful for stiff ODEs.</p>
+  <section id="numerical-simulation-and-scientific-computing-i">
+<h1><span class="section-number">1. </span><center> Numerical Simulation and Scientific Computing I </center><a class="headerlink" href="#numerical-simulation-and-scientific-computing-i" title="Link to this heading">#</a></h1>
 </section>
-<section id="mathematical-overview">
-<h2><span class="section-number">3.2. </span>Mathematical Overview<a class="headerlink" href="#mathematical-overview" title="Link to this heading">#</a></h2>
-<p>For every timestep for the value <span class="math notranslate nohighlight">\(y^{n+1}\)</span> we need to solve:</p>
-<p><span class="math notranslate nohighlight">\(\frac{y_{i+1}-y_i}{\tau}=f(y_{i+1})\)</span></p>
+<section id="team-11">
+<h1><span class="section-number">2. </span>Team 11<a class="headerlink" href="#team-11" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Shakira Pannier (12509817)</p></li>
+<li><p>Leon Orou (12125027)</p></li>
+<li><p>Natalia Ksiazek (12507337)</p></li>
+</ul>
+<hr class="docutils" />
 </section>
-<section id="implementation">
-<h2><span class="section-number">3.3. </span>Implementation<a class="headerlink" href="#implementation" title="Link to this heading">#</a></h2>
-<p>The implicit euler method requires solving a nonlinear system at each time step
-since the function evaluation is at the unknown future point <span class="math notranslate nohighlight">\(y_{i+1}\)</span>.
-This is done using a Newton solver.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m_yold</span><span class="o">-&gt;</span><span class="nb">set</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
-<span class="n">m_tau</span><span class="o">-&gt;</span><span class="nb">set</span><span class="p">(</span><span class="n">tau</span><span class="p">);</span>
-<span class="n">NewtonSolver</span><span class="p">(</span><span class="n">m_equ</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
-</pre></div>
-</div>
+<section id="part-1">
+<h1><span class="section-number">3. </span>Part 1<a class="headerlink" href="#part-1" title="Link to this heading">#</a></h1>
+<section id="phase-plots">
+<h2><span class="section-number">3.1. </span>Phase plots<a class="headerlink" href="#phase-plots" title="Link to this heading">#</a></h2>
+<p>steps = {100, 150, 200}</p>
+<p><img alt="PhasePlot100" src="../ASC-ODE/demos/plots/MassSpringPhasePlot_100.png" />
+<img alt="PhasePlot150" src="../ASC-ODE/demos/plots/MassSpringPhasePlot_150.png" />
+<img alt="PhasePlot200" src="../ASC-ODE/demos/plots/MassSpringPhasePlot_200.png" /></p>
 </section>
-<section id="results-for-mass-spring-system">
-<h2><span class="section-number">3.4. </span>Results for Mass-Spring System<a class="headerlink" href="#results-for-mass-spring-system" title="Link to this heading">#</a></h2>
-<p>Below is a phase plot for a mass-spring system solved using the Implicit Euler method.</p>
-<p><img alt="Mass Spring Phase Plot Implicit Euler Method" src="docs/plots/MassSpringPhasePlot_implicit.png" /></p>
-<p><img alt="Mass Spring System Time Evolution Implicit Euler Method" src="docs/plots/MassSpringSystemTimeEvolution_implicit.png" /></p>
+<section id="time-evolution">
+<h2><span class="section-number">3.2. </span>Time Evolution<a class="headerlink" href="#time-evolution" title="Link to this heading">#</a></h2>
+<p>steps = {100, 150, 200}</p>
+<p><img alt="TimeEvolution100" src="../ASC-ODE/demos/plots/MassSpringSystemTimeEvolution_100.png" />
+<img alt="TimeEvolution150" src="../ASC-ODE/demos/plots/MassSpringSystemTimeEvolution_150.png" />
+<img alt="TimeEvolution200" src="../ASC-ODE/demos/plots/MassSpringSystemTimeEvolution_200.png" /></p>
+</section>
+<section id="id1">
+<h2><span class="section-number">3.3. </span><a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 </section>
 </section>
 
@@ -422,7 +412,7 @@ This is done using a Newton solver.</p>
         },
         kernelOptions: {
             name: "python3",
-            path: "./files/stepper"
+            path: "./."
         },
         predefinedOutput: true
     }
@@ -440,22 +430,13 @@ This is done using a Newton solver.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="improved_euler.html"
+       href="intro.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">2. </span>Improved Euler Method (Heun’s Method)</p>
+        <p class="prev-next-title">Welcome to ASC-ODE’s documentation!</p>
       </div>
-    </a>
-    <a class="right-next"
-       href="crank.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">4. </span>Crank-Nicolson Method</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -473,11 +454,16 @@ This is done using a Newton solver.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">3.1. Introduction</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-overview">3.2. Mathematical Overview</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation">3.3. Implementation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#results-for-mass-spring-system">3.4. Results for Mass-Spring System</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">1. <center> Numerical Simulation and Scientific Computing I </center></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#team-11">2. Team 11</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1">3. Part 1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#phase-plots">3.1. Phase plots</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-evolution">3.2. Time Evolution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">3.3. </a></li>
 </ul>
+</li>
+</ul>
+
   </nav></div>
 
 </div></div>
@@ -525,8 +511,8 @@ By Shakira Pannier, Natalia Ksiazek, Leon Orou
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>
