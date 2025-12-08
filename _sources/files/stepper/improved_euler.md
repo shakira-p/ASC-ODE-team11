@@ -62,6 +62,6 @@ Below is a phase plot for a mass-spring system solved using the Improved Euler m
 
 First the system phase plot and time evolution using the Improved Euler method with step size h=0.1:
 
-![Mass Spring Phase Plot Improved Euler Method](/docs/plots/MassSpringPhasePlot_improved.png)
+![Mass Spring Phase Plot Improved Euler Method](../../pictures/MassSpringPhasePlot_improved.png)
 
-![Mass Spring System Time Evolution Improved Euler Method](/docs/plots/MassSpringSystemTimeEvolution_improved.png)
+![Mass Spring System Time Evolution Improved Euler Method](../../pictures/MassSpringSystemTimeEvolution_improved.png)

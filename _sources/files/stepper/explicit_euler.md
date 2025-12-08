@@ -38,8 +38,8 @@ y += tau * m_vecf;
 
 Below is a phase plot for a mass-spring system solved using the Explicit Euler method.
 
-![Mass Spring Phase Plot Explicit Euler Method](/docs/plots/MassSpringPhasePlot_explict.png)
+![Mass Spring Phase Plot Explicit Euler Method](../../pictures/MassSpringPhasePlot_explict.png)
 
-![Mass Spring System Time Evolution Explicit Euler Method](/docs/plots/MassSpringSystemTimeEvolution_explict.png)
+![Mass Spring System Time Evolution Explicit Euler Method](../../pictures/MassSpringSystemTimeEvolution_explict.png)
 
 Here we can see that the Explicit Euler method does not conserve energy, leading to a spiraling outwards trajectory in the phase plot.

@@ -426,26 +426,26 @@ document.write(`
 <section id="explicit-euler-method">
 <h3><span class="section-number">10.2.1. </span>Explicit Euler Method<a class="headerlink" href="#explicit-euler-method" title="Link to this heading">#</a></h3>
 <p>Overview of obtained results. In this case aplitude of voltage of source is much higher than voltage of capacitor.</p>
-<p><img alt="Explicit Euler Method Set1" src="docs/plots/circuit/set1/ElectricCircuit_set1_explicit_whole.png" /></p>
+<p><img alt="Explicit Euler Method Set1" src="../../_images/ElectricCircuit_set1_explicit_whole.png" /></p>
 <p>As this method calculates the next state based entirely on the current slope, it is prone to increase voltage when step size is large. We can observe that analizing orange line for steps=100. It creates sawtooth like output rather than sinusoidal and is sign of being close to instability. For 1000 and 10000 steps, functions converge to correct solution, as both plots have sinusoidal form.</p>
-<p><img alt="Explicit Euler Method Set1 Zoom" src="docs/plots/circuit/set1/ElectricCircuit_set1_explicit.png" /></p>
+<p><img alt="Explicit Euler Method Set1 Zoom" src="../../_images/ElectricCircuit_set1_explicit.png" /></p>
 </section>
 <section id="implicit-euler-method">
 <h3><span class="section-number">10.2.2. </span>Implicit Euler Method<a class="headerlink" href="#implicit-euler-method" title="Link to this heading">#</a></h3>
 <p>This method calculates the next state based on the future slope, what can couse artificial voltage loss. This happens for 100 steps. Even though the simulation is stable the results are inaccurate.</p>
-<p><img alt="Implicit Euler Method Set1" src="docs/plots/circuit/set1/ElectricCircuit_set1_implicit.png" /></p>
+<p><img alt="Implicit Euler Method Set1" src="../../_images/ElectricCircuit_set1_implicit.png" /></p>
 <p>Comparing results for N = 1000 for Implicit and Explicit methods, we can see that output signal is respectively higher and lower than it really is. One method artificially overshoot signal and one damp it. This results from differences in approaches in this two methods.</p>
 </section>
 <section id="improved-euler-method">
 <h3><span class="section-number">10.2.3. </span>Improved Euler Method<a class="headerlink" href="#improved-euler-method" title="Link to this heading">#</a></h3>
 <p>These methods average the slopes, at the start and at the end of interval, to cancel out error. This makes them significantly more accurate for the same number of steps compared to previous methods.
 For N = 100 plot looks almost flat, this many steps is not enough for capturing any changes in system giving us not very usefull results. On the other hand, this method converge to exact solution much faster than 1st order Euler methods.</p>
-<p><img alt="Improved Euler Method Set1" src="docs/plots/circuit/set1/ElectricCircuit_set1_improved.png" /></p>
+<p><img alt="Improved Euler Method Set1" src="../../_images/ElectricCircuit_set1_improved.png" /></p>
 </section>
 <section id="crank-nicolson-method">
 <h3><span class="section-number">10.2.4. </span>Crank-Nicolson Method<a class="headerlink" href="#crank-nicolson-method" title="Link to this heading">#</a></h3>
 <p>Same as in Improved Euler method. Fail to capture changes with low number of steps giving flat line. But converge to exact solution faster than 1st order Euler methods.</p>
-<p><img alt="Crank-Nicolson Method Set1" src="docs/plots/circuit/set1/ElectricCircuit_set1_crank.png" /></p>
+<p><img alt="Crank-Nicolson Method Set1" src="../../_images/ElectricCircuit_set1_crank.png" /></p>
 <p>In general we have to simulate system with high freuquancy of input signal. This creates a need for higher number of steps taken for acurrate simulation. Improved Euler and Crank-Nicolson are more efficient for this problem.</p>
 </section>
 </section>
@@ -455,23 +455,23 @@ For N = 100 plot looks almost flat, this many steps is not enough for capturing 
 <section id="id1">
 <h3><span class="section-number">10.3.1. </span>Explicit Euler Method<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
 <p>For orange plot we used 5000 steps and we get highy oscillating results. For comparition, in prevous example we used 5 times less steps and get stable and valid signal. For N = 7000 we observe oscillations at the very begginig but then it converges to final sinusoid. For smaller N values oscillations spiked to +-infinity.</p>
-<p><img alt="Explicit Euler Method Set2" src="docs/plots/circuit/set2/ElectricCircuit_set2_explicit.png" /></p>
+<p><img alt="Explicit Euler Method Set2" src="../../_images/ElectricCircuit_set2_explicit.png" /></p>
 </section>
 <section id="id2">
 <h3><span class="section-number">10.3.2. </span>Implicit Euler Method<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
 <p>This method turned out to be great for systems with low <span class="math notranslate nohighlight">\(\tau\)</span>. For small step size simulation remained stable even though resoulution is low. Method converges quickly to expected wave form for 1000 steps.</p>
-<p><img alt="Implicit Euler Method Set2" src="docs/plots/circuit/set2/ElectricCircuit_set2_implicit3.png" /></p>
+<p><img alt="Implicit Euler Method Set2" src="../../_images/ElectricCircuit_set2_implicit3.png" /></p>
 </section>
 <section id="id3">
 <h3><span class="section-number">10.3.3. </span>Improved Euler Method<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <p>Here we get quite interesting results. For small N simulation was not stable, but for N = 5000 we got nice wave signal but shifted in amplitude by -1V. For N = 7000 function converges to expected form.</p>
-<p><img alt="Improved Euler Method Set2" src="docs/plots/circuit/set2/ElectricCircuit_set2_improved2.png" /></p>
+<p><img alt="Improved Euler Method Set2" src="../../_images/ElectricCircuit_set2_improved2.png" /></p>
 </section>
 <section id="id4">
 <h3><span class="section-number">10.3.4. </span>Crank-Nicolson Method<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
 <p>For N = 1000 we se oscillations at the beginning but the signal converges nicely.</p>
-<p><img alt="Crank-Nicolson Method Set2" src="docs/plots/circuit/set2/ElectricCircuit_set2_crank2.png" />
-<img alt="Crank-Nicolson Method Set2" src="docs/plots/circuit/set2/ElectricCircuit_set2_crank3.png" /></p>
+<p><img alt="Crank-Nicolson Method Set2" src="../../_images/ElectricCircuit_set2_crank2.png" />
+<img alt="Crank-Nicolson Method Set2" src="../../_images/ElectricCircuit_set2_crank3.png" /></p>
 </section>
 </section>
 </section>
