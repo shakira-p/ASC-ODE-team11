@@ -164,6 +164,22 @@ public:
     evaluateT(x, f);
   }
 
+  // Helper to get position of a connector from input vector x
+  template <typename T>
+  Vec<D, T> getConnectorPos(VectorView<T> x, const Connector& c) const
+  {
+    Vec<D, T> pos;
+    if (c.type == Connector::FIX) {
+      for (int d = 0; d < D; d++)
+        pos(d) = T(mss.fixes()[c.nr].pos(d));
+    } else {
+      // Read position from input vector x (first D*n_masses entries are positions)
+      for (int d = 0; d < D; d++)
+        pos(d) = x(c.nr * D + d);
+    }
+    return pos;
+  }
+
   template <typename T>
   void evaluateT (VectorView<T> x, VectorView<T> f) const
   {
@@ -181,19 +197,12 @@ public:
       for (int d = 0; d < D; d++)
         fmat(i, d) = T(mss.masses()[i].mass * mss.getGravity()(d));
 
-    // Spring forces (elastic)
+    // Spring forces (elastic) - now using positions from input vector x
     for (auto spring : mss.springs())
     {
       auto [c1, c2] = spring.connectors;
-      Vec<D, T> p1, p2;
-      if (c1.type == Connector::FIX)
-        for (int d = 0; d < D; d++) p1(d) = T(mss.fixes()[c1.nr].pos(d));
-      else
-        for (int d = 0; d < D; d++) p1(d) = T(mss.masses()[c1.nr].pos(d));
-      if (c2.type == Connector::FIX)
-        for (int d = 0; d < D; d++) p2(d) = T(mss.fixes()[c2.nr].pos(d));
-      else
-        for (int d = 0; d < D; d++) p2(d) = T(mss.masses()[c2.nr].pos(d));
+      Vec<D, T> p1 = getConnectorPos(x, c1);
+      Vec<D, T> p2 = getConnectorPos(x, c2);
 
       Vec<D, T> diff;
       for (int d = 0; d < D; d++)
@@ -222,35 +231,24 @@ public:
     }
     else
     {
-      // With constraints: solve m*a = F + lambda*grad(g)
-      // x = [accelerations, lambdas], f = residual equations
+      // With constraints: this function is called with x = [positions, lambdas]
+      // and should return f = [forces, constraint_values]
+      // The time integrator composes this with the Newmark update
 
-      // Rearrange: m*a - F - lambda*grad(g) = 0
-      for (size_t i = 0; i < n_masses; i++) {
-        T mass = mss.masses()[i].mass;
-        for (int d = 0; d < D; d++)
-          fmat(i, d) = mass * x(i * D + d) - fmat(i, d);
-      }
-
-      // Add constraint forces: -lambda * dg/dx
+      // For constraint forces: add lambda * grad(g) to forces
       for (size_t c = 0; c < n_constraints; c++) {
         auto& con = mss.constraints()[c];
         auto [c1, c2] = con.connectors;
         T lambda = x(D * n_masses + c);
 
-        Vec<D, T> p1, p2;
-        if (c1.type == Connector::FIX)
-          for (int d = 0; d < D; d++) p1(d) = T(mss.fixes()[c1.nr].pos(d));
-        else
-          for (int d = 0; d < D; d++) p1(d) = T(mss.masses()[c1.nr].pos(d));
-        if (c2.type == Connector::FIX)
-          for (int d = 0; d < D; d++) p2(d) = T(mss.fixes()[c2.nr].pos(d));
-        else
-          for (int d = 0; d < D; d++) p2(d) = T(mss.masses()[c2.nr].pos(d));
+        Vec<D, T> p1 = getConnectorPos(x, c1);
+        Vec<D, T> p2 = getConnectorPos(x, c2);
 
         Vec<D, T> diff;
         for (int d = 0; d < D; d++) diff(d) = p2(d) - p1(d);
 
+        // grad(g) = 2*(p2-p1) for g = |p2-p1|^2 - L^2
+        // Force on mass = -lambda * grad_mass(g)
         if (c1.type == Connector::MASS)
           for (int d = 0; d < D; d++)
             fmat(c1.nr, d) = fmat(c1.nr, d) + lambda * T(2.0) * diff(d);
@@ -259,20 +257,20 @@ public:
             fmat(c2.nr, d) = fmat(c2.nr, d) - lambda * T(2.0) * diff(d);
       }
 
+      // Convert forces to accelerations: a = F/m
+      for (size_t i = 0; i < n_masses; i++) {
+        T mass_val = T(mss.masses()[i].mass);
+        for (int d = 0; d < D; d++)
+          fmat(i, d) = fmat(i, d) / mass_val;
+      }
+
       // Constraint equations: g(x) = |p2-p1|^2 - L^2 = 0
       for (size_t c = 0; c < n_constraints; c++) {
         auto& con = mss.constraints()[c];
         auto [c1, c2] = con.connectors;
 
-        Vec<D, T> p1, p2;
-        if (c1.type == Connector::FIX)
-          for (int d = 0; d < D; d++) p1(d) = T(mss.fixes()[c1.nr].pos(d));
-        else
-          for (int d = 0; d < D; d++) p1(d) = T(mss.masses()[c1.nr].pos(d));
-        if (c2.type == Connector::FIX)
-          for (int d = 0; d < D; d++) p2(d) = T(mss.fixes()[c2.nr].pos(d));
-        else
-          for (int d = 0; d < D; d++) p2(d) = T(mss.masses()[c2.nr].pos(d));
+        Vec<D, T> p1 = getConnectorPos(x, c1);
+        Vec<D, T> p2 = getConnectorPos(x, c2);
 
         T dist_sq = T(0.0);
         for (int d = 0; d < D; d++)
