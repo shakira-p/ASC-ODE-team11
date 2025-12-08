@@ -24,11 +24,3 @@ m_tau->set(tau);
 NewtonSolver(m_equ, y);
 ```
 
-## Results for Mass-Spring System
-
-Below is a phase plot for a mass-spring system solved using the Implicit Euler method.
-
-![Mass Spring Phase Plot Implicit Euler Method](../../pictures/MassSpringPhasePlot_implicit.png)
-
-![Mass Spring System Time Evolution Implicit Euler Method](../../pictures/MassSpringSystemTimeEvolution_implicit.png)
-
