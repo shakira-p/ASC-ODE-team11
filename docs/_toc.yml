@@ -22,7 +22,6 @@ parts:
   - caption: Applications
     numbered: True
     chapters:
-      - file: files/application/pendulum.md
       - file: files/application/mass_spring.md
       - file: files/application/electric_network.md
 

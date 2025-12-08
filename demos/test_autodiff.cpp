@@ -50,16 +50,17 @@ public:
 
   void evaluateDeriv (VectorView<double> x, MatrixView<double> df) const override
   {
-    Vector<AutoDiff<2>> x_ad(2);
-    Vector<AutoDiff<2>> f_ad(2);
+    const size_t N = 2;
+    Vector<AutoDiff<>> x_ad(N);
+    Vector<AutoDiff<>> f_ad(N);
 
-    x_ad(0) = Variable<0>(x(0));
-    x_ad(1) = Variable<1>(x(1));
-    T_evaluate<AutoDiff<2>>(x_ad, f_ad);
+    x_ad(0) = AutoDiff<>(x(0), 0, N);
+    x_ad(1) = AutoDiff<>(x(1), 1, N);
+    T_evaluate<AutoDiff<>>(x_ad, f_ad);
 
-    for (size_t i = 0; i < 2; i++)
-      for (size_t j = 0; j < 2; j++)
-        df(i,j) = f_ad(i).deriv()[j];
+    for (size_t i = 0; i < N; i++)
+      for (size_t j = 0; j < N; j++)
+        df(i,j) = derivative(f_ad(i), j);
   }
 
   template <typename T>
@@ -79,8 +80,8 @@ int main(int argc, char* argv[])
   std::cout << "x,P0,P0_prime,P1,P1_prime,P2,P2_prime,P3,P3_prime,P4,P4_prime,P5,P5_prime" << std::endl;
 
   for (double x = -1.0; x <= 1.0; x += 0.02) {
-    AutoDiff<1> adx = Variable<0>(x);
-    std::vector<AutoDiff<1>> P;
+    AutoDiff<> adx(x, 0, 1);  // value, derivIndex, size
+    std::vector<AutoDiff<>> P;
     LegendrePolynomials(5, adx, P);
 
     // Output: x, P_0(x), P_0'(x), P_1(x), P_1'(x), ..., P_5(x), P_5'(x)

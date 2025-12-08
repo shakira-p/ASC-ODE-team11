@@ -156,10 +156,10 @@ public:
   MSS_Function (MassSpringSystem<D> & _mss)
     : mss(_mss) { }
 
-  virtual size_t dimX() const { return D*mss.masses().size(); }
-  virtual size_t dimF() const { return D*mss.masses().size(); }
+  virtual size_t dimX() const { return D*mss.masses().size() + mss.constraints().size(); }
+  virtual size_t dimF() const { return dimX(); }
 
-  virtual void evaluate (VectorView<double> x, VectorView<double> f) const override
+  virtual void evaluate (VectorView<double> x, VectorView<double> f) const
   {
     evaluateT(x, f);
   }
@@ -167,76 +167,142 @@ public:
   template <typename T>
   void evaluateT (VectorView<T> x, VectorView<T> f) const
   {
-    f = 0.0;
+    size_t n_masses = mss.masses().size();
+    size_t n_constraints = mss.constraints().size();
 
-    auto xmat = x.asMatrix(mss.masses().size(), D);
-    auto fmat = f.asMatrix(mss.masses().size(), D);
+    for (size_t i = 0; i < f.size(); i++)
+      f(i) = T(0.0);
 
-    for (size_t i = 0; i < mss.masses().size(); i++)
-      fmat.row(i) = mss.masses()[i].mass*mss.getGravity();
+    // Helper lambda to access f as a 2D array (row-major: f[i*D + d])
+    auto fmat = [&](size_t i, int d) -> T& { return f(i * D + d); };
 
+    // Gravity forces (converted to accelerations later if no constraints)
+    for (size_t i = 0; i < n_masses; i++)
+      for (int d = 0; d < D; d++)
+        fmat(i, d) = T(mss.masses()[i].mass * mss.getGravity()(d));
+
+    // Spring forces (elastic)
     for (auto spring : mss.springs())
-      {
-        auto [c1,c2] = spring.connectors;
-        Vec<D, T> p1, p2;
-        if (c1.type == Connector::FIX)
-          p1 = mss.fixes()[c1.nr].pos;
-        else
-          p1 = xmat.row(c1.nr);
-        if (c2.type == Connector::FIX)
-          p2 = mss.fixes()[c2.nr].pos;
-        else
-          p2 = xmat.row(c2.nr);
+    {
+      auto [c1, c2] = spring.connectors;
+      Vec<D, T> p1, p2;
+      if (c1.type == Connector::FIX)
+        for (int d = 0; d < D; d++) p1(d) = T(mss.fixes()[c1.nr].pos(d));
+      else
+        for (int d = 0; d < D; d++) p1(d) = T(mss.masses()[c1.nr].pos(d));
+      if (c2.type == Connector::FIX)
+        for (int d = 0; d < D; d++) p2(d) = T(mss.fixes()[c2.nr].pos(d));
+      else
+        for (int d = 0; d < D; d++) p2(d) = T(mss.masses()[c2.nr].pos(d));
 
-        T dist = norm(p1 - p2);
-        T force = spring.stiffness * (dist - spring.length);
-        Vec<D, T> diff = p2 - p1;
-        T inv_dist = T(1.0) / dist;
-        Vec<D, T> dir12;
-        for (int i = 0; i < D; i++)
-          dir12(i) = inv_dist * diff(i);
+      Vec<D, T> diff;
+      for (int d = 0; d < D; d++)
+        diff(d) = p1(d) - p2(d);
 
-        Vec<D, T> force_vec;
-        for (int i = 0; i < D; i++)
-          force_vec(i) = force * dir12(i);
+      T dist = vecNorm(diff);
+      T force = T(spring.stiffness) * (dist - T(spring.length));
+      Vec<D, T> dir;
+      for (int d = 0; d < D; d++)
+        dir(d) = (p2(d) - p1(d)) / dist;
 
-        if (c1.type == Connector::MASS)
-          for (int i = 0; i < D; i++)
-            fmat.row(c1.nr)(i) = fmat.row(c1.nr)(i) + force_vec(i);
-        if (c2.type == Connector::MASS)
-          for (int i = 0; i < D; i++)
-            fmat.row(c2.nr)(i) = fmat.row(c2.nr)(i) - force_vec(i);
+      if (c1.type == Connector::MASS)
+        for (int d = 0; d < D; d++)
+          fmat(c1.nr, d) = fmat(c1.nr, d) + force * dir(d);
+      if (c2.type == Connector::MASS)
+        for (int d = 0; d < D; d++)
+          fmat(c2.nr, d) = fmat(c2.nr, d) - force * dir(d);
+    }
+
+    if (n_constraints == 0)
+    {
+      // No constraints: just return accelerations (f = m*a -> a = f/m)
+      for (size_t i = 0; i < n_masses; i++)
+        for (int d = 0; d < D; d++)
+          fmat(i, d) = fmat(i, d) / T(mss.masses()[i].mass);
+    }
+    else
+    {
+      // With constraints: solve m*a = F + lambda*grad(g)
+      // x = [accelerations, lambdas], f = residual equations
+
+      // Rearrange: m*a - F - lambda*grad(g) = 0
+      for (size_t i = 0; i < n_masses; i++) {
+        T mass = mss.masses()[i].mass;
+        for (int d = 0; d < D; d++)
+          fmat(i, d) = mass * x(i * D + d) - fmat(i, d);
       }
 
-    for (size_t i = 0; i < mss.masses().size(); i++)
-      fmat.row(i) *= T(1.0)/mss.masses()[i].mass;
+      // Add constraint forces: -lambda * dg/dx
+      for (size_t c = 0; c < n_constraints; c++) {
+        auto& con = mss.constraints()[c];
+        auto [c1, c2] = con.connectors;
+        T lambda = x(D * n_masses + c);
+
+        Vec<D, T> p1, p2;
+        if (c1.type == Connector::FIX)
+          for (int d = 0; d < D; d++) p1(d) = T(mss.fixes()[c1.nr].pos(d));
+        else
+          for (int d = 0; d < D; d++) p1(d) = T(mss.masses()[c1.nr].pos(d));
+        if (c2.type == Connector::FIX)
+          for (int d = 0; d < D; d++) p2(d) = T(mss.fixes()[c2.nr].pos(d));
+        else
+          for (int d = 0; d < D; d++) p2(d) = T(mss.masses()[c2.nr].pos(d));
+
+        Vec<D, T> diff;
+        for (int d = 0; d < D; d++) diff(d) = p2(d) - p1(d);
+
+        if (c1.type == Connector::MASS)
+          for (int d = 0; d < D; d++)
+            fmat(c1.nr, d) = fmat(c1.nr, d) + lambda * T(2.0) * diff(d);
+        if (c2.type == Connector::MASS)
+          for (int d = 0; d < D; d++)
+            fmat(c2.nr, d) = fmat(c2.nr, d) - lambda * T(2.0) * diff(d);
+      }
+
+      // Constraint equations: g(x) = |p2-p1|^2 - L^2 = 0
+      for (size_t c = 0; c < n_constraints; c++) {
+        auto& con = mss.constraints()[c];
+        auto [c1, c2] = con.connectors;
+
+        Vec<D, T> p1, p2;
+        if (c1.type == Connector::FIX)
+          for (int d = 0; d < D; d++) p1(d) = T(mss.fixes()[c1.nr].pos(d));
+        else
+          for (int d = 0; d < D; d++) p1(d) = T(mss.masses()[c1.nr].pos(d));
+        if (c2.type == Connector::FIX)
+          for (int d = 0; d < D; d++) p2(d) = T(mss.fixes()[c2.nr].pos(d));
+        else
+          for (int d = 0; d < D; d++) p2(d) = T(mss.masses()[c2.nr].pos(d));
+
+        T dist_sq = T(0.0);
+        for (int d = 0; d < D; d++)
+          dist_sq = dist_sq + (p2(d) - p1(d)) * (p2(d) - p1(d));
+
+        f(D * n_masses + c) = dist_sq - T(con.length * con.length);
+      }
+    }
   }
 
-  static constexpr size_t MAX_N = 16;  // Compile-time constant
-  // template <typename T>
-  virtual void evaluateDeriv (VectorView<double> x, MatrixView<double> df) const override
+  virtual void evaluateDeriv (VectorView<double> x, MatrixView<double> df) const
   {
-    // TODO: exact differentiation
     const size_t N = dimX();
 
-    Vector<AutoDiff<MAX_N>> xad(N);
-    for (size_t i=0; i<N; i++)
+    // Use dynamic AutoDiff - size determined at runtime
+    Vector<AutoDiff<>> xad(N);
+    for (size_t i = 0; i < N; i++)
     {
-      xad(i) = AutoDiff<MAX_N>(x(i));
-      // xad(i).deriv()[i] = AutoDiff<N>(x(i), i);
+      xad(i) = AutoDiff<>(x(i), i, N);  // value, derivIndex, size
     }
-    Vector<AutoDiff<MAX_N>> fad(dimF());
 
-    // Create VectorView manually from the data pointer
-    VectorView<AutoDiff<MAX_N>> xad_view(N, xad.data());
-    VectorView<AutoDiff<MAX_N>> fad_view(dimF(), fad.data());
+    Vector<AutoDiff<>> fad(dimF());
+    VectorView<AutoDiff<>> xad_view(N, xad.data());
+    VectorView<AutoDiff<>> fad_view(dimF(), fad.data());
 
     evaluateT(xad_view, fad_view);
-    // evaluateT(xad.view(), fad.view());
 
     for (size_t i = 0; i < dimF(); i++)
       for (size_t j = 0; j < N; j++)
-        df(i,j) = derivative(fad(i), j);
+        df(i, j) = derivative(fad(i), j);
 
     //// Numerical differentiation
     // double eps = 1e-8;

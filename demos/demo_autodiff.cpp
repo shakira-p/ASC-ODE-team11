@@ -40,13 +40,14 @@ int main()  // int argc, char* argv[]
   // double y =
 
   double x = 1, y = 2;
-  AutoDiff<2> adx = Variable<0>(x);
-  AutoDiff<2> ady = Variable<1>(y);
+  const size_t N = 2;
+  AutoDiff<> adx(x, 0, N);  // value, derivIndex, size
+  AutoDiff<> ady(y, 1, N);
 
   std::cout << "adx = " << adx << std::endl;
   std::cout << "ady = " << ady << std::endl;
 
-  AutoDiff<2> prod = adx * ady;
+  AutoDiff<> prod = adx * ady;
   std::cout << "prod = " << prod << std::endl;
 
   std::cout << "func1(adx, ady) = " << func1(adx, ady) << std::endl;
@@ -58,7 +59,8 @@ int main()  // int argc, char* argv[]
 
   {
     // we can do second derivatives:
-    AutoDiff<1, AutoDiff<1>> addx{Variable<0>(2)};
+    // Note: nested AutoDiff for second derivatives needs special handling with dynamic size
+    AutoDiff<> addx(2.0, 0, 1);
     std::cout << "addx = " << addx << std::endl;
     // func = x*x
     // func' = 2*x

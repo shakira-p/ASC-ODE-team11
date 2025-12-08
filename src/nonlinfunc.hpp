@@ -320,16 +320,18 @@ namespace ASC_ode
 
     void evaluateDeriv (VectorView<double> x, MatrixView<double> df) const override
     {
-      Vector<AutoDiff<2>> x_ad(2);
-      Vector<AutoDiff<2>> f_ad(2);
+      const size_t N = 2;
+      Vector<AutoDiff<>> x_ad(N);
+      Vector<AutoDiff<>> f_ad(N);
 
-      x_ad(0) = Variable<0>(x(0));
-      x_ad(1) = Variable<1>(x(1));
-      T_evaluate<AutoDiff<2>>(x_ad, f_ad);
+      // Use dynamic AutoDiff with runtime size
+      x_ad(0) = AutoDiff<>(x(0), 0, N);  // value, derivIndex, size
+      x_ad(1) = AutoDiff<>(x(1), 1, N);
+      T_evaluate<AutoDiff<>>(x_ad, f_ad);
 
-      for (size_t i = 0; i < 2; i++)
-        for (size_t j = 0; j < 2; j++)
-          df(i,j) = f_ad(i).deriv()[j];
+      for (size_t i = 0; i < N; i++)
+        for (size_t j = 0; j < N; j++)
+          df(i,j) = derivative(f_ad(i), j);
     }
 
     template <typename T>
