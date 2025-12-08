@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -377,7 +377,10 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">6.3.2.3. Key Features</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#helper-functions">6.3.3. Helper Functions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#helper-functions">6.3.3. Helper Functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gauss-legrendre">6.3.3.1. Gauss Legrendre</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -395,35 +398,79 @@ document.write(`
 <h1><span class="section-number">6. </span>Runge Kutta Methods<a class="headerlink" href="#runge-kutta-methods" title="Link to this heading">#</a></h1>
 <section id="introduction">
 <h2><span class="section-number">6.1. </span>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<p>The Runge Kutta methods are a family of iterative methods for solving ordinary differential equations (ODEs).
+They provide a powerful framework for achieving higher-order accuracy in time-stepping schemes.
+This document describes both explicit and implicit Runge Kutta methods implemented in the ASC-ODE package.</p>
 </section>
 <section id="mathematical-overview">
 <h2><span class="section-number">6.2. </span>Mathematical Overview<a class="headerlink" href="#mathematical-overview" title="Link to this heading">#</a></h2>
+<p>Given an ODE <span class="math notranslate nohighlight">\(\frac{dy}{dt} = f(t, y)\)</span>, the Runge Kutta methods compute the solution at time <span class="math notranslate nohighlight">\(t_{n+1} = t_n + \tau\)</span> using a series of intermediate stages.</p>
+<p>Runge–Kutta methods solves the initial value problem
+<span class="math notranslate nohighlight">\(y'(t) = f(t, y(t)), \quad y(t_0) = y_0\)</span>
+by approximating
+<span class="math notranslate nohighlight">\(y(t_{n+1}) = y(t_n) + \int_{t_n}^{t_{n+1}} f(s, y(s)) \, ds\)</span>
+with a weighted sum of a few function evaluations inside the step. [web:2]</p>
+<p>In an <span class="math notranslate nohighlight">\(s\)</span>‑stage RK method, one computes intermediate slopes
+<span class="math notranslate nohighlight">\(k_j \approx f(t_n + c_j h,\, y_n + h \sum_{\ell} a_{j\ell} k_\ell)\)</span>
+and updates
+<span class="math notranslate nohighlight">\(y_{n+1} = y_n + h \sum_{j=1}^s b_j k_j\)</span>,<br />
+where <span class="math notranslate nohighlight">\(h\)</span> is the step size and <span class="math notranslate nohighlight">\(a_{j\ell}, b_j, c_j\)</span> are method‑defining coefficients. [web:2]</p>
+<p>These coefficients are usually arranged in a Butcher tableau,
+and different choices give different methods, such as the explicit midpoint method,
+the classical RK4 method, or implicit Gauss/Radau schemes with better stability.</p>
 </section>
 <section id="implementation">
 <h2><span class="section-number">6.3. </span>Implementation<a class="headerlink" href="#implementation" title="Link to this heading">#</a></h2>
 <p>Both explicit and implicit Runge Kutta methods are implemented in the ASC-ODE package.</p>
 <section id="explicit-runge-kutta-method">
 <h3><span class="section-number">6.3.1. </span>Explicit Runge Kutta Method<a class="headerlink" href="#explicit-runge-kutta-method" title="Link to this heading">#</a></h3>
+<p>The explicit Runge Kutta method is implemented using the Butcher tableau representation.
+The method computes intermediate stages based on the coefficients defined in the tableau and
+combines them to update the solution. It can be see as an extension of the explicit Euler method to higher-order accuracy.</p>
 <section id="constructor-parameters">
 <h4><span class="section-number">6.3.1.1. </span>Constructor Parameters<a class="headerlink" href="#constructor-parameters" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rhs</span></code>: A <code class="docutils literal notranslate"><span class="pre">NonlinearFunction</span></code> representing <span class="math notranslate nohighlight">\(f(t, y)\)</span></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">A</span></code>: Coefficient matrix from the Butcher tableau</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b</span></code>: Weight vector from the Butcher tableau</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">c</span></code>: Node vector from the Butcher tableau</p></li>
+</ul>
 </section>
 <section id="dostep-parameters">
 <h4><span class="section-number">6.3.1.2. </span>DoStep Parameters<a class="headerlink" href="#dostep-parameters" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">tau</span></code>: Time step size <span class="math notranslate nohighlight">\(\tau\)</span></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: Current solution vector</p></li>
+</ul>
 </section>
 <section id="key-features">
 <h4><span class="section-number">6.3.1.3. </span>Key Features<a class="headerlink" href="#key-features" title="Link to this heading">#</a></h4>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
+<ul class="simple">
+<li><p>Computes the solution using a fixed sequence of explicit stages where each stage depends only on previously computed stages, so no nonlinear or linear systems must be solved.</p></li>
+<li><p>Simple to implement and flexible: different orders and error properties are obtained by choosing Butcher‑tableau coefficients, making it easy to build higher‑order schemes.</p></li>
+<li><p>Conditionnally stable and best suited for non‑stiff problems — time step size must satisfy stability constraints (e.g., CFL‑type limits) for reliable results</p></li>
+</ul>
 </section>
 </section>
 <section id="implicit-runge-kutta-method">
 <h3><span class="section-number">6.3.2. </span>Implicit Runge Kutta Method<a class="headerlink" href="#implicit-runge-kutta-method" title="Link to this heading">#</a></h3>
+<p>The implicit Runge Kutta method is also implemented using the Butcher tableau representation.
+It gives optimal accuracy because it is based on the Gaussian quadrature points.</p>
 <section id="id1">
 <h4><span class="section-number">6.3.2.1. </span>Constructor Parameters<a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rhs</span></code>: A <code class="docutils literal notranslate"><span class="pre">NonlinearFunction</span></code> representing <span class="math notranslate nohighlight">\(f(t, y)\)</span></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">A</span></code>: Coefficient matrix from the Butcher tableau</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b</span></code>: Weight vector from the Butcher tableau</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">c</span></code>: Node vector from the Butcher tableau</p></li>
+</ul>
 </section>
 <section id="id2">
 <h4><span class="section-number">6.3.2.2. </span>DoStep Parameters<a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">tau</span></code>: Time step size <span class="math notranslate nohighlight">\(\tau\)</span></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: Current solution vector</p></li>
+</ul>
 </section>
 <section id="id3">
 <h4><span class="section-number">6.3.2.3. </span>Key Features<a class="headerlink" href="#id3" title="Link to this heading">#</a></h4>
@@ -436,6 +483,36 @@ document.write(`
 </section>
 <section id="helper-functions">
 <h3><span class="section-number">6.3.3. </span>Helper Functions<a class="headerlink" href="#helper-functions" title="Link to this heading">#</a></h3>
+<p>The package includes helper functions to generate common Butcher tableaus for both explicit and
+implicit Runge Kutta methods.</p>
+<section id="gauss-legrendre">
+<h4><span class="section-number">6.3.3.1. </span>Gauss Legrendre<a class="headerlink" href="#gauss-legrendre" title="Link to this heading">#</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">Gauss2a,Gauss2b,</span> <span class="pre">Gauss2c,</span> <span class="pre">Gauss3c</span></code></p>
+<ul class="simple">
+<li><p>Purpose: Predefined Butcher coefficients / nodes for common Gauss–Legendre RK schemes (2-stage, 3-stage nodes).</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">GaussLegendre(VectorView&lt;&gt;</span> <span class="pre">x,</span> <span class="pre">VectorView&lt;&gt;</span> <span class="pre">w)</span></code></p>
+<ul class="simple">
+<li><p>Purpose: Compute n-point Gauss–Legendre quadrature nodes x and weights w on [0,1].</p></li>
+<li><p>Inputs/Outputs: x and w are mutable views of length n; filled in-place.</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">GaussJacobi(VectorView&lt;&gt;</span> <span class="pre">x,</span> <span class="pre">VectorView&lt;&gt;</span> <span class="pre">w,</span> <span class="pre">double</span> <span class="pre">alf,</span> <span class="pre">double</span> <span class="pre">bet)</span></code></p>
+<ul class="simple">
+<li><p>Purpose: Compute n-point Gauss–Jacobi nodes/weights for parameters α,β.</p></li>
+<li><p>Inputs/Outputs: x, w views; alf, bet parameters.</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">ComputeABfromC(const</span> <span class="pre">Vector&lt;&gt;</span> <span class="pre">&amp;c)</span></code></p>
+<ul class="simple">
+<li><p>Purpose: Given collocation nodes c, compute Butcher matrix A and weight vector b so the collocation RK satisfies moment conditions.</p></li>
+<li><p>Inputs/Outputs: c (vector) → returns (A,b) (Matrix, Vector).</p></li>
+<li><p>Algorithm: builds Vandermonde-like matrix M of powers of c, inverts M, uses integrals 1/(i+1) to get b, and similarly for rows of A.</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">GaussRadau(VectorView&lt;&gt;</span> <span class="pre">x,</span> <span class="pre">VectorView&lt;&gt;</span> <span class="pre">w)</span></code></p>
+<ul class="simple">
+<li><p>Purpose: Compute Gauss–Radau nodes/weights on [0,1] with the last node fixed at 1.
+Implementation: Calls GaussJacobi for n-1 inner nodes (α=1,β=0), rescales to [0,1], sets x[n-1]=1, and computes last weight to sum to 1.</p></li>
+</ul>
+</section>
 </section>
 </section>
 </section>
@@ -519,7 +596,10 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">6.3.2.3. Key Features</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#helper-functions">6.3.3. Helper Functions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#helper-functions">6.3.3. Helper Functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gauss-legrendre">6.3.3.1. Gauss Legrendre</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
