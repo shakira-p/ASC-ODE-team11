@@ -57,6 +57,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'files/application/electric_network';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -337,7 +339,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -353,6 +357,28 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#autonomus-system">11.1. Autonomus system</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#circuit-1-r-c-1">11.2. Circuit 1 (R = C = 1)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#explicit-euler-method">11.2.1. Explicit Euler Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-euler-method">11.2.2. Implicit Euler Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#improved-euler-method">11.2.3. Improved Euler Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#crank-nicolson-method">11.2.4. Crank-Nicolson Method</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#circuit-2-r-100-c-1e-6">11.3. Circuit 2 (R = 100, C = 1e-6)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">11.3.1. Explicit Euler Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">11.3.2. Implicit Euler Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">11.3.3. Improved Euler Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">11.3.4. Crank-Nicolson Method</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -364,6 +390,91 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="electric-network-model">
 <h1><span class="section-number">11. </span>Electric Network Model<a class="headerlink" href="#electric-network-model" title="Link to this heading">#</a></h1>
+<section id="autonomus-system">
+<h2><span class="section-number">11.1. </span>Autonomus system<a class="headerlink" href="#autonomus-system" title="Link to this heading">#</a></h2>
+<p>System was changed to autonomous form and defined in <code class="docutils literal notranslate"><span class="pre">ElectricNetwork</span></code> class.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">ElectricNetwork</span> <span class="p">:</span> <span class="n">public</span> <span class="n">NonlinearFunction</span>
+<span class="p">{</span>
+<span class="n">private</span><span class="p">:</span>
+  <span class="n">double</span> <span class="n">resistivity</span><span class="p">;</span>
+  <span class="n">double</span> <span class="n">capacity</span><span class="p">;</span>
+
+<span class="n">public</span><span class="p">:</span>
+  <span class="n">ElectricNetwork</span><span class="p">(</span><span class="n">double</span> <span class="n">r</span><span class="p">,</span> <span class="n">double</span> <span class="n">c</span><span class="p">)</span> <span class="p">:</span> <span class="n">resistivity</span><span class="p">(</span><span class="n">r</span><span class="p">),</span> <span class="n">capacity</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="n">size_t</span> <span class="n">dimX</span><span class="p">()</span> <span class="n">const</span> <span class="n">override</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">2</span><span class="p">;</span> <span class="p">}</span>
+  <span class="n">size_t</span> <span class="n">dimF</span><span class="p">()</span> <span class="n">const</span> <span class="n">override</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">2</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="n">void</span> <span class="n">evaluate</span> <span class="p">(</span><span class="n">VectorView</span><span class="o">&lt;</span><span class="n">double</span><span class="o">&gt;</span> <span class="n">x</span><span class="p">,</span> <span class="n">VectorView</span><span class="o">&lt;</span><span class="n">double</span><span class="o">&gt;</span> <span class="n">f</span><span class="p">)</span> <span class="n">const</span> <span class="n">override</span>
+  <span class="p">{</span>
+    <span class="n">f</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="n">M_PI</span><span class="o">*</span><span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="n">x</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">resistivity</span><span class="o">*</span><span class="n">capacity</span><span class="p">);</span>
+    <span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">void</span> <span class="n">evaluateDeriv</span> <span class="p">(</span><span class="n">VectorView</span><span class="o">&lt;</span><span class="n">double</span><span class="o">&gt;</span> <span class="n">x</span><span class="p">,</span> <span class="n">MatrixView</span><span class="o">&lt;</span><span class="n">double</span><span class="o">&gt;</span> <span class="n">df</span><span class="p">)</span> <span class="n">const</span> <span class="n">override</span>
+  <span class="p">{</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+    <span class="n">df</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">resistivity</span> <span class="o">*</span> <span class="n">capacity</span><span class="p">);</span>
+    <span class="n">df</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="mi">100</span><span class="o">*</span><span class="n">M_PI</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="n">M_PI</span><span class="o">*</span><span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">resistivity</span><span class="o">*</span><span class="n">capacity</span><span class="p">);</span>
+    <span class="n">df</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+<section id="circuit-1-r-c-1">
+<h2><span class="section-number">11.2. </span>Circuit 1 (R = C = 1)<a class="headerlink" href="#circuit-1-r-c-1" title="Link to this heading">#</a></h2>
+<section id="explicit-euler-method">
+<h3><span class="section-number">11.2.1. </span>Explicit Euler Method<a class="headerlink" href="#explicit-euler-method" title="Link to this heading">#</a></h3>
+<p>Overview of obtained results. In this case aplitude of voltage of source is much higher than voltage of capacitor.</p>
+<p><img alt="Explicit Euler Method Set1" src="../../_images/ElectricCircuit_set1_explicit_whole.png" /></p>
+<p>As this method calculates the next state based entirely on the current slope, it is prone to increase voltage when step size is large. We can observe that analizing orange line for steps=100. It creates sawtooth like output rather than sinusoidal and is sign of being close to instability. For 1000 and 10000 steps, functions converge to correct solution, as both plots have sinusoidal form.</p>
+<p><img alt="Explicit Euler Method Set1 Zoom" src="../../_images/ElectricCircuit_set1_explicit.png" /></p>
+</section>
+<section id="implicit-euler-method">
+<h3><span class="section-number">11.2.2. </span>Implicit Euler Method<a class="headerlink" href="#implicit-euler-method" title="Link to this heading">#</a></h3>
+<p>This method calculates the next state based on the future slope, what can couse artificial voltage loss. This happens for 100 steps. Even though the simulation is stable the results are inaccurate.</p>
+<p><img alt="Implicit Euler Method Set1" src="../../_images/ElectricCircuit_set1_implicit.png" /></p>
+<p>Comparing results for N = 1000 for Implicit and Explicit methods, we can see that output signal is respectively higher and lower than it really is. One method artificially overshoot signal and one damp it. This results from differences in approaches in this two methods.</p>
+</section>
+<section id="improved-euler-method">
+<h3><span class="section-number">11.2.3. </span>Improved Euler Method<a class="headerlink" href="#improved-euler-method" title="Link to this heading">#</a></h3>
+<p>These methods average the slopes, at the start and at the end of interval, to cancel out error. This makes them significantly more accurate for the same number of steps compared to previous methods.
+For N = 100 plot looks almost flat, this many steps is not enough for capturing any changes in system giving us not very usefull results. On the other hand, this method converge to exact solution much faster than 1st order Euler methods.</p>
+<p><img alt="Improved Euler Method Set1" src="../../_images/ElectricCircuit_set1_improved.png" /></p>
+</section>
+<section id="crank-nicolson-method">
+<h3><span class="section-number">11.2.4. </span>Crank-Nicolson Method<a class="headerlink" href="#crank-nicolson-method" title="Link to this heading">#</a></h3>
+<p>Same as in Improved Euler method. Fail to capture changes with low number of steps giving flat line. But converge to exact solution faster than 1st order Euler methods.</p>
+<p><img alt="Crank-Nicolson Method Set1" src="../../_images/ElectricCircuit_set1_crank.png" /></p>
+<p>In general we have to simulate system with high freuquancy of input signal. This creates a need for higher number of steps taken for acurrate simulation. Improved Euler and Crank-Nicolson are more efficient for this problem.</p>
+</section>
+</section>
+<section id="circuit-2-r-100-c-1e-6">
+<h2><span class="section-number">11.3. </span>Circuit 2 (R = 100, C = 1e-6)<a class="headerlink" href="#circuit-2-r-100-c-1e-6" title="Link to this heading">#</a></h2>
+<p>In the case of these parameters the challenge is greater. Not only frequency of source signal is high, but also the time constant <span class="math notranslate nohighlight">\(\tau\)</span> is low. Time constant tells us how much time it takes to charge capacitor through resistor to about 64%. It is given by <span class="math notranslate nohighlight">\(\tau\)</span>=RC. In prevoius example <span class="math notranslate nohighlight">\(\tau\)</span>=1, here it is <span class="math notranslate nohighlight">\(100*10^{-6} = 0.0001s\)</span>. This means that circiut is sensitive to changes of input voltage, making it prone to oscillations.</p>
+<section id="id1">
+<h3><span class="section-number">11.3.1. </span>Explicit Euler Method<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>For orange plot we used 5000 steps and we get highy oscillating results. For comparition, in prevous example we used 5 times less steps and get stable and valid signal. For N = 7000 we observe oscillations at the very begginig but then it converges to final sinusoid. For smaller N values oscillations spiked to +-infinity.</p>
+<p><img alt="Explicit Euler Method Set2" src="../../_images/ElectricCircuit_set2_explicit.png" /></p>
+</section>
+<section id="id2">
+<h3><span class="section-number">11.3.2. </span>Implicit Euler Method<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>This method turned out to be great for systems with low <span class="math notranslate nohighlight">\(\tau\)</span>. For small step size simulation remained stable even though resoulution is low. Method converges quickly to expected wave form for 1000 steps.</p>
+<p><img alt="Implicit Euler Method Set2" src="../../_images/ElectricCircuit_set2_implicit3.png" /></p>
+</section>
+<section id="id3">
+<h3><span class="section-number">11.3.3. </span>Improved Euler Method<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p>Here we get quite interesting results. For small N simulation was not stable, but for N = 5000 we got nice wave signal but shifted in amplitude by -1V. For N = 7000 function converges to expected form.</p>
+<p><img alt="Improved Euler Method Set2" src="../../_images/ElectricCircuit_set2_improved2.png" /></p>
+</section>
+<section id="id4">
+<h3><span class="section-number">11.3.4. </span>Crank-Nicolson Method<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<p>For N = 1000 we se oscillations at the beginning but the signal converges nicely.</p>
+<p><img alt="Crank-Nicolson Method Set2" src="../../_images/ElectricCircuit_set2_crank2.png" />
+<img alt="Crank-Nicolson Method Set2" src="../../_images/ElectricCircuit_set2_crank3.png" /></p>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -411,6 +522,35 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#autonomus-system">11.1. Autonomus system</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#circuit-1-r-c-1">11.2. Circuit 1 (R = C = 1)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#explicit-euler-method">11.2.1. Explicit Euler Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-euler-method">11.2.2. Implicit Euler Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#improved-euler-method">11.2.3. Improved Euler Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#crank-nicolson-method">11.2.4. Crank-Nicolson Method</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#circuit-2-r-100-c-1e-6">11.3. Circuit 2 (R = 100, C = 1e-6)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">11.3.1. Explicit Euler Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">11.3.2. Implicit Euler Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">11.3.3. Improved Euler Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">11.3.4. Crank-Nicolson Method</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

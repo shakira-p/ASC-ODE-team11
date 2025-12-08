@@ -57,8 +57,6 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'files/stepper/runge_kutta';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -340,9 +338,7 @@ document.write(`
   </button>
 `);
 </script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -358,22 +354,6 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation">7.1. Implementation</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#explicit-runge-kutta-method">7.1.1. Explicit Runge Kutta Method</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-runge-kutta-method">7.1.2. Implicit Runge Kutta Method</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#helper-functions">7.1.3. Helper Functions</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">7.1.3.1. </a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -385,30 +365,6 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="runge-kutta-methods">
 <h1><span class="section-number">7. </span>Runge Kutta Methods<a class="headerlink" href="#runge-kutta-methods" title="Link to this heading">#</a></h1>
-<section id="implementation">
-<h2><span class="section-number">7.1. </span>Implementation<a class="headerlink" href="#implementation" title="Link to this heading">#</a></h2>
-<p>Both explicit and implicit Runge Kutta methods are implemented in the ASC-ODE package.</p>
-<section id="explicit-runge-kutta-method">
-<h3><span class="section-number">7.1.1. </span>Explicit Runge Kutta Method<a class="headerlink" href="#explicit-runge-kutta-method" title="Link to this heading">#</a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-</section>
-<section id="implicit-runge-kutta-method">
-<h3><span class="section-number">7.1.2. </span>Implicit Runge Kutta Method<a class="headerlink" href="#implicit-runge-kutta-method" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p>Builds the nonlinear system for the concatenated stage vector <span class="math notranslate nohighlight">\(k = [k_0;...;k_{s-1}]: F(k) = k - f( y_n + tau * (A ⊗ I) * k ) = 0\)</span></p></li>
-<li><p>Uses NewtonSolver(m_equ, m_k) to solve for k, then updates: <span class="math notranslate nohighlight">\(y_{n+1} = y_n + \tau * sum_j b_j * k_j\)</span></p></li>
-<li><p>Stores m_k and m_y as contiguous vectors: stage j occupies indices <span class="math notranslate nohighlight">\([j*n, (j+1)*n)\)</span>.</p></li>
-</ul>
-</section>
-<section id="helper-functions">
-<h3><span class="section-number">7.1.3. </span>Helper Functions<a class="headerlink" href="#helper-functions" title="Link to this heading">#</a></h3>
-<section id="id1">
-<h4><span class="section-number">7.1.3.1. </span><a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
-</section>
-</section>
-</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -465,29 +421,6 @@ document.write(`
             </div>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation">7.1. Implementation</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#explicit-runge-kutta-method">7.1.1. Explicit Runge Kutta Method</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-runge-kutta-method">7.1.2. Implicit Runge Kutta Method</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#helper-functions">7.1.3. Helper Functions</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">7.1.3.1. </a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>
