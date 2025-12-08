@@ -73,7 +73,13 @@ PYBIND11_MODULE(mass_spring, m) {
                              [](Spring & s) { return s.connectors; })
       ;
 
-    
+    py::class_<DistanceConstraint> (m, "DistanceConstraint")
+      .def(py::init<double, std::array<Connector,2>>())
+      .def_property_readonly("length", [](DistanceConstraint & c) { return c.length; })
+      .def_property_readonly("connectors", [](DistanceConstraint & c) { return c.connectors; })
+      ;
+
+
     py::bind_vector<std::vector<Mass<3>>>(m, "Masses3d");
     py::bind_vector<std::vector<Fix<3>>>(m, "Fixes3d");
     py::bind_vector<std::vector<Spring>>(m, "Springs");        
@@ -97,9 +103,11 @@ PYBIND11_MODULE(mass_spring, m) {
       .def("add", [](MassSpringSystem<3> & mss, Mass<3> m) { return mss.addMass(m); })
       .def("add", [](MassSpringSystem<3> & mss, Fix<3> f) { return mss.addFix(f); })
       .def("add", [](MassSpringSystem<3> & mss, Spring s) { return mss.addSpring(s); })
+      .def("add", [](MassSpringSystem<3> & mss, DistanceConstraint c) { return mss.addConstraint(c); })
       .def_property_readonly("masses", [](MassSpringSystem<3> & mss) -> auto& { return mss.masses(); })
       .def_property_readonly("fixes", [](MassSpringSystem<3> & mss) -> auto& { return mss.fixes(); })
       .def_property_readonly("springs", [](MassSpringSystem<3> & mss) -> auto& { return mss.springs(); })
+      .def_property_readonly("constraints", [](MassSpringSystem<3> & mss) -> auto& { return mss.constraints(); })
       .def("__getitem__", [](MassSpringSystem<3> mss, Connector & c) {
         if (c.type==Connector::FIX) return py::cast(mss.fixes()[c.nr]);
         else return py::cast(mss.masses()[c.nr]);
@@ -114,13 +122,22 @@ PYBIND11_MODULE(mass_spring, m) {
       })
 
       .def("simulate", [](MassSpringSystem<3> & mss, double tend, size_t steps) {
-        Vector<> x(3*mss.masses().size());
-        Vector<> dx(3*mss.masses().size());
-        Vector<> ddx(3*mss.masses().size());
+        size_t n_masses = mss.masses().size();
+        size_t n_constraints = mss.constraints().size();
+        size_t n = 3 * n_masses + n_constraints;
+
+        Vector<> x(n);
+        Vector<> dx(n);
+        Vector<> ddx(n);
         mss.getState (x, dx, ddx);
 
+        // Initialize constraint variables (lambdas) to zero
+        for (size_t i = 3 * n_masses; i < n; i++) {
+          x(i) = 0; dx(i) = 0; ddx(i) = 0;
+        }
+
         auto mss_func = std::make_shared<MSS_Function<3>> (mss);
-        auto mass = std::make_shared<IdentityFunction> (x.size());
+        auto mass = std::make_shared<IdentityFunction> (n);
 
         SolveODE_Alpha(tend, steps, 0.8, x, dx, ddx, mss_func, mass);
 
