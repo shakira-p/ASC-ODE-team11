@@ -102,4 +102,18 @@ implicit Runge Kutta methods.
 - Purpose: Compute Gauss–Radau nodes/weights on [0,1] with the last node fixed at 1.
 - Implementation: Calls GaussJacobi for n-1 inner nodes (α=1,β=0), rescales to [0,1], sets x[n-1]=1, and computes last weight to sum to 1.
 
+## Results for Mass-Spring System
 
+Below is a phase plot for a mass-spring system solved using both Explicit and Implicit Runge Kutta methods with the different helper functions to generate Butcher tableaus.
+
+First the system phase plot and time evolution using the Explicit Runge Kutta method with step size h=0.1:
+
+![Mass Spring Phase Plot Explicit Runge Kutta Method](../../pictures/MassSpringPhasePlot_rungekutta_explicit_100.png)
+![Mass Spring System Time Evolution Explicit Runge Kutta Method](../../pictures/MassSpringSystemTimeEvolution_rungekutta_explicit_100.png)
+
+Next the system phase plot and time evolution using the Implicit Runge Kutta method with step size h=0.1:
+
+![Mass Spring Phase Plot Implicit Runge Kutta Method](../../pictures/MassSpringPhasePlot_rungekutta_implicit_100.png)
+![Mass Spring System Time Evolution Implicit Runge Kutta Method](../../pictures/MassSpringSystemTimeEvolution_rungekutta_implicit_100.png)
+
+TODO add rest of mass spring plots system radau, legrendre, gauss
