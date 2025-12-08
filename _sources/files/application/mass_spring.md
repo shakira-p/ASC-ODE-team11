@@ -35,6 +35,15 @@ First the system phase plot and time evolution using the Improved Euler method w
 
 ## Crank-Nicolson
 
+Below is a phase plot for a mass-spring system solved using the Crank-Nicolson method.  
+
+First the system phase plot and time evolution using the Improved Euler method with step size h=0.1:
+
+![Mass Spring Phase Plot Improved Euler Method](../../pictures/MassSpringPhasePlot_crank.png)
+
+![Mass Spring System Time Evolution Improved Euler Method](../../pictures/MassSpringSystemTimeEvolution_crank.png)
+
+
 ## Runge-Kutta
 
 Below is a phase plot for a mass-spring system solved using both Explicit and Implicit Runge Kutta methods with the different helper functions to generate Butcher tableaus.
