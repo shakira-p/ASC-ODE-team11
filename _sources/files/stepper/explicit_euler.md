@@ -33,13 +33,3 @@ It updates the solution by taking a step in the direction of the derivative at t
 this->m_rhs->evaluate(y, m_vecf);
 y += tau * m_vecf;
 ```
-
-## Results for Mass-Spring System
-
-Below is a phase plot for a mass-spring system solved using the Explicit Euler method.
-
-![Mass Spring Phase Plot Explicit Euler Method](../../pictures/MassSpringPhasePlot_explict.png)
-
-![Mass Spring System Time Evolution Explicit Euler Method](../../pictures/MassSpringSystemTimeEvolution_explict.png)
-
-Here we can see that the Explicit Euler method does not conserve energy, leading to a spiraling outwards trajectory in the phase plot.

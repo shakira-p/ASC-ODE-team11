@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -337,7 +337,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -353,6 +355,24 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explicit-euler">9.1. Explicit Euler</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-euler">9.2. Implicit Euler</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improved-euler">9.3. Improved Euler</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crank-nicolson">9.4. Crank-Nicolson</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#runge-kutta">9.5. Runge-Kutta</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-of-different-methods-and-step-sizes">9.6. Comparison of different methods and step sizes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-size-t-100">9.6.1. Step Size T = 100</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-size-t-150">9.6.2. Step Size T = 150</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-size-t-200">9.6.3. Step Size T = 200</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -364,6 +384,62 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="mass-spring-system">
 <h1><span class="section-number">9. </span>Mass Spring System<a class="headerlink" href="#mass-spring-system" title="Link to this heading">#</a></h1>
+<p>This example demonstrates the application of the ASC-ODE package to simulate
+a mass-spring system. The mass-spring system is a classic example in physics
+and engineering, characterized by oscillatory motion due to the restoring force
+of the spring.</p>
+<section id="explicit-euler">
+<h2><span class="section-number">9.1. </span>Explicit Euler<a class="headerlink" href="#explicit-euler" title="Link to this heading">#</a></h2>
+<p>Below is a phase plot for a mass-spring system solved using the Explicit Euler method.</p>
+<p><img alt="Mass Spring Phase Plot Explicit Euler Method" src="../../_images/MassSpringPhasePlot_explict.png" /></p>
+<p><img alt="Mass Spring System Time Evolution Explicit Euler Method" src="../../_images/MassSpringSystemTimeEvolution_explict.png" /></p>
+<p>Here we can see that the Explicit Euler method does not conserve energy, leading to a spiraling outwards trajectory in the phase plot.</p>
+</section>
+<section id="implicit-euler">
+<h2><span class="section-number">9.2. </span>Implicit Euler<a class="headerlink" href="#implicit-euler" title="Link to this heading">#</a></h2>
+<p>Below is a phase plot for a mass-spring system solved using the Implicit Euler method.</p>
+<p><img alt="Mass Spring Phase Plot Implicit Euler Method" src="../../_images/MassSpringPhasePlot_implicit.png" /></p>
+<p><img alt="Mass Spring System Time Evolution Implicit Euler Method" src="../../_images/MassSpringSystemTimeEvolution_implicit.png" /></p>
+</section>
+<section id="improved-euler">
+<h2><span class="section-number">9.3. </span>Improved Euler<a class="headerlink" href="#improved-euler" title="Link to this heading">#</a></h2>
+<p>Below is a phase plot for a mass-spring system solved using the Improved Euler method.</p>
+<p>First the system phase plot and time evolution using the Improved Euler method with step size h=0.1:</p>
+<p><img alt="Mass Spring Phase Plot Improved Euler Method" src="../../_images/MassSpringPhasePlot_improved.png" /></p>
+<p><img alt="Mass Spring System Time Evolution Improved Euler Method" src="../../_images/MassSpringSystemTimeEvolution_improved.png" /></p>
+</section>
+<section id="crank-nicolson">
+<h2><span class="section-number">9.4. </span>Crank-Nicolson<a class="headerlink" href="#crank-nicolson" title="Link to this heading">#</a></h2>
+</section>
+<section id="runge-kutta">
+<h2><span class="section-number">9.5. </span>Runge-Kutta<a class="headerlink" href="#runge-kutta" title="Link to this heading">#</a></h2>
+<p>Below is a phase plot for a mass-spring system solved using both Explicit and Implicit Runge Kutta methods with the different helper functions to generate Butcher tableaus.</p>
+<p>First the system phase plot and time evolution using the Explicit Runge Kutta method with step size h=0.1:</p>
+<p><img alt="Mass Spring Phase Plot Explicit Runge Kutta Method" src="../../_images/MassSpringPhasePlot_rungekutta_explicit_100.png" />
+<img alt="Mass Spring System Time Evolution Explicit Runge Kutta Method" src="../../_images/MassSpringSystemTimeEvolution_rungekutta_explicit_100.png" /></p>
+<p>Next the system phase plot and time evolution using the Implicit Runge Kutta method with step size h=0.1:</p>
+<p><img alt="Mass Spring Phase Plot Implicit Runge Kutta Method" src="../../_images/MassSpringPhasePlot_rungekutta_implicit_100.png" />
+<img alt="Mass Spring System Time Evolution Implicit Runge Kutta Method" src="../../_images/MassSpringSystemTimeEvolution_rungekutta_implicit_100.png" /></p>
+<p>TODO add rest of mass spring plots system radau, legrendre, gauss</p>
+</section>
+<section id="comparison-of-different-methods-and-step-sizes">
+<h2><span class="section-number">9.6. </span>Comparison of different methods and step sizes<a class="headerlink" href="#comparison-of-different-methods-and-step-sizes" title="Link to this heading">#</a></h2>
+<section id="step-size-t-100">
+<h3><span class="section-number">9.6.1. </span>Step Size T = 100<a class="headerlink" href="#step-size-t-100" title="Link to this heading">#</a></h3>
+<p><img alt="Mass Spring Phase Plot Step Size 100" src="../../_images/MassSpringPhasePlot_100.png" />
+<img alt="Mass Spring System Time Evolution Step Size 100" src="../../_images/MassSpringSystemTimeEvolution_100.png" /></p>
+</section>
+<section id="step-size-t-150">
+<h3><span class="section-number">9.6.2. </span>Step Size T = 150<a class="headerlink" href="#step-size-t-150" title="Link to this heading">#</a></h3>
+<p><img alt="Mass Spring Phase Plot Step Size 100" src="../../_images/MassSpringPhasePlot_150.png" />
+<img alt="Mass Spring System Time Evolution Step Size 100" src="../../_images/MassSpringSystemTimeEvolution_150.png" /></p>
+</section>
+<section id="step-size-t-200">
+<h3><span class="section-number">9.6.3. </span>Step Size T = 200<a class="headerlink" href="#step-size-t-200" title="Link to this heading">#</a></h3>
+<p><img alt="Mass Spring Phase Plot Step Size 100" src="../../_images/MassSpringPhasePlot_200.png" />
+<img alt="Mass Spring System Time Evolution Step Size 100" src="../../_images/MassSpringSystemTimeEvolution_200.png" /></p>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -420,6 +496,31 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explicit-euler">9.1. Explicit Euler</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-euler">9.2. Implicit Euler</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improved-euler">9.3. Improved Euler</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crank-nicolson">9.4. Crank-Nicolson</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#runge-kutta">9.5. Runge-Kutta</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-of-different-methods-and-step-sizes">9.6. Comparison of different methods and step sizes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-size-t-100">9.6.1. Step Size T = 100</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-size-t-150">9.6.2. Step Size T = 150</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-size-t-200">9.6.3. Step Size T = 200</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
