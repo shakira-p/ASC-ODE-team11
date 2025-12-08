@@ -71,7 +71,7 @@ int main(int argc, char* argv[])
     return 1;
   }
 
-  double tend = 4*M_PI;
+  double tend = 1.0;
 
   // in oder to not build it each time when changing stepsize, we make it an argument
   const int steps = std::stoi(argv[1]);  // get nr steps as argument
@@ -84,7 +84,8 @@ int main(int argc, char* argv[])
 
   // Electric Circuit
   Vector<> y = { 0, 0 };  // initializer list
-  auto rhs = std::make_shared<ElectricNetwork>(1.0, 1.0);
+  // auto rhs = std::make_shared<ElectricNetwork>(1.0, 1.0);
+  auto rhs = std::make_shared<ElectricNetwork>(100.0, 1e-6);
 
 
 
@@ -97,10 +98,10 @@ int main(int argc, char* argv[])
 
 
 
-  ExplicitEuler stepper(rhs);
+  // ExplicitEuler stepper(rhs);
   // ImplicitEuler stepper(rhs);
   // ImprovedEuler stepper(rhs);
-  //CrankNicolson stepper(rhs);
+  CrankNicolson stepper(rhs);
 
   //  ExplicitRungeKutta stepper(rhs, Gauss2a, Gauss2b, Gauss2c);
 
@@ -131,7 +132,7 @@ int main(int argc, char* argv[])
 
 
   // std::ofstream outfile ("../rungekutta_explicit.txt");
-  std::ofstream outfile ("../ASC-ODE/demos/data/circuit_explicit.txt");
+  std::ofstream outfile ("../demos/data/electric_circuit/circuit_crank.txt");
   std::cout << 0.0 << "  " << y(0) << " " << y(1) << " " << steps << std::endl;
   outfile << 0.0 << "  " << y(0) << " " << y(1) << " " << steps << std::endl;
 
