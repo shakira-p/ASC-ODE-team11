@@ -129,7 +129,19 @@ PYBIND11_MODULE(mass_spring, m) {
         Vector<> x(n);
         Vector<> dx(n);
         Vector<> ddx(n);
-        mss.getState (x, dx, ddx);
+
+        // Get state for masses only (first 3*n_masses entries)
+        Vector<> x_masses(3*n_masses);
+        Vector<> dx_masses(3*n_masses);
+        Vector<> ddx_masses(3*n_masses);
+        mss.getState(x_masses, dx_masses, ddx_masses);
+
+        // Copy mass state to full state vector
+        for (size_t i = 0; i < 3 * n_masses; i++) {
+          x(i) = x_masses(i);
+          dx(i) = dx_masses(i);
+          ddx(i) = ddx_masses(i);
+        }
 
         // Initialize constraint variables (lambdas) to zero
         for (size_t i = 3 * n_masses; i < n; i++) {
@@ -141,7 +153,13 @@ PYBIND11_MODULE(mass_spring, m) {
 
         SolveODE_Alpha(tend, steps, 0.8, x, dx, ddx, mss_func, mass);
 
-        mss.setState (x, dx, ddx);  
+        // Extract mass state from full state vector and update mss
+        for (size_t i = 0; i < 3 * n_masses; i++) {
+          x_masses(i) = x(i);
+          dx_masses(i) = dx(i);
+          ddx_masses(i) = ddx(i);
+        }
+        mss.setState(x_masses, dx_masses, ddx_masses);
     });
 
 
