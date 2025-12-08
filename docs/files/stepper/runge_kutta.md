@@ -52,7 +52,7 @@ combines them to update the solution. It can be see as an extension of the expli
 
 - Computes the solution using a fixed sequence of explicit stages where each stage depends only on previously computed stages, so no nonlinear or linear systems must be solved.
 - Simple to implement and flexible: different orders and error properties are obtained by choosing Butcher‑tableau coefficients, making it easy to build higher‑order schemes.
-- Conditionnally stable and best suited for non‑stiff problems — time step size must satisfy stability constraints (e.g., CFL‑type limits) for reliable results
+- Conditionally stable and best suited for non‑stiff problems — time step size must satisfy stability constraints (e.g., CFL‑type limits) for reliable results
 ### Implicit Runge Kutta Method
 
 The implicit Runge Kutta method is also implemented using the Butcher tableau representation.
@@ -82,8 +82,6 @@ It gives optimal accuracy because it is based on the Gaussian quadrature points.
 The package includes helper functions to generate common Butcher tableaus for both explicit and 
 implicit Runge Kutta methods.
 
-#### Gauss Legrendre 
-
 `Gauss2a,Gauss2b, Gauss2c, Gauss3c`
 - Purpose: Predefined Butcher coefficients / nodes for common Gauss–Legendre RK schemes (2-stage, 3-stage nodes).
 
@@ -102,6 +100,6 @@ implicit Runge Kutta methods.
 
 `GaussRadau(VectorView<> x, VectorView<> w)`
 - Purpose: Compute Gauss–Radau nodes/weights on [0,1] with the last node fixed at 1.
-Implementation: Calls GaussJacobi for n-1 inner nodes (α=1,β=0), rescales to [0,1], sets x[n-1]=1, and computes last weight to sum to 1.
+- Implementation: Calls GaussJacobi for n-1 inner nodes (α=1,β=0), rescales to [0,1], sets x[n-1]=1, and computes last weight to sum to 1.
 
 
