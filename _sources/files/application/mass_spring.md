@@ -124,3 +124,12 @@ Larger step sizes can introduce significant numerical errors, leading to distort
 The choice of numerical method also plays a crucial role in the accuracy of the simulation.
 Explicit methods may be less stable for larger step sizes, while implicit methods tend to be more stable but computationally intensive.
 Overall, the Improved Euler and Crank-Nicolson methods provide a good balance between accuracy and computational efficiency for simulating the mass-spring system.
+
+
+## Simulation of Mass-Spring System
+
+Here is a simulation of a simple mass-spring system where a mass is attached to a spring and oscillates back and forth.
+![Chain Simulation](../../pictures/gifs/mass_spring_chain.gif)
+
+Here we see a simulation of a mass-spring chain system where multiple masses are connected by springs.
+![Crane Simulation](../../pictures/gifs/crane_simulation.gif)
