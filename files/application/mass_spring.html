@@ -364,7 +364,11 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-euler">9.2. Implicit Euler</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improved-euler">9.3. Improved Euler</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crank-nicolson">9.4. Crank-Nicolson</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#runge-kutta">9.5. Runge-Kutta</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#runge-kutta">9.5. Runge-Kutta</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#explicit-runge-kutta-method">9.5.1. Explicit Runge Kutta Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-runge-kutta-method">9.5.2. Implicit Runge Kutta Method</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-of-different-methods-and-step-sizes">9.6. Comparison of different methods and step sizes</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-size-t-100">9.6.1. Step Size T = 100</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-size-t-150">9.6.2. Step Size T = 150</a></li>
@@ -417,14 +421,20 @@ of the spring.</p>
 </section>
 <section id="runge-kutta">
 <h2><span class="section-number">9.5. </span>Runge-Kutta<a class="headerlink" href="#runge-kutta" title="Link to this heading">#</a></h2>
+<section id="explicit-runge-kutta-method">
+<h3><span class="section-number">9.5.1. </span>Explicit Runge Kutta Method<a class="headerlink" href="#explicit-runge-kutta-method" title="Link to this heading">#</a></h3>
 <p>Below is a phase plot for a mass-spring system solved using both Explicit and Implicit Runge Kutta methods with the different helper functions to generate Butcher tableaus.</p>
 <p>First the system phase plot and time evolution using the Explicit Runge Kutta method with step size h=0.1:</p>
 <p><img alt="Mass Spring Phase Plot Explicit Runge Kutta Method" src="../../_images/MassSpringPhasePlot_rungekutta_explicit_100.png" />
 <img alt="Mass Spring System Time Evolution Explicit Runge Kutta Method" src="../../_images/MassSpringSystemTimeEvolution_rungekutta_explicit_100.png" /></p>
+</section>
+<section id="implicit-runge-kutta-method">
+<h3><span class="section-number">9.5.2. </span>Implicit Runge Kutta Method<a class="headerlink" href="#implicit-runge-kutta-method" title="Link to this heading">#</a></h3>
 <p>Next the system phase plot and time evolution using the Implicit Runge Kutta method with step size h=0.1:</p>
 <p><img alt="Mass Spring Phase Plot Implicit Runge Kutta Method" src="../../_images/MassSpringPhasePlot_rungekutta_implicit_100.png" />
 <img alt="Mass Spring System Time Evolution Implicit Runge Kutta Method" src="../../_images/MassSpringSystemTimeEvolution_rungekutta_implicit_100.png" /></p>
 <p>TODO add rest of mass spring plots system radau, legrendre, gauss</p>
+</section>
 </section>
 <section id="comparison-of-different-methods-and-step-sizes">
 <h2><span class="section-number">9.6. </span>Comparison of different methods and step sizes<a class="headerlink" href="#comparison-of-different-methods-and-step-sizes" title="Link to this heading">#</a></h2>
@@ -514,7 +524,11 @@ of the spring.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-euler">9.2. Implicit Euler</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improved-euler">9.3. Improved Euler</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crank-nicolson">9.4. Crank-Nicolson</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#runge-kutta">9.5. Runge-Kutta</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#runge-kutta">9.5. Runge-Kutta</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#explicit-runge-kutta-method">9.5.1. Explicit Runge Kutta Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-runge-kutta-method">9.5.2. Implicit Runge Kutta Method</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-of-different-methods-and-step-sizes">9.6. Comparison of different methods and step sizes</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-size-t-100">9.6.1. Step Size T = 100</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-size-t-150">9.6.2. Step Size T = 150</a></li>
