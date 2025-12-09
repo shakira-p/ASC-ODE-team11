@@ -1,11 +1,26 @@
 # ASC-ODE
-A package for solving ordinary differential equations
+A python package for solving ordinary differential equations, implemented in C++ and built with pybind11.
 
-Read the [documentation](https://shakira-p.github.io/ASC-ODE-team11/overview.html)
+The following applications are already implemented:
+* Mass Spring system
+* Electric Networks
+
+By using different the stepper functions:
+* Implicit Euler
+* Explicit Euler / Improved Euler
+* Runge-Kutta methods
+* Newton Solver
+* Crank-Nicolson
+
+And helper classes:
+* AutoDiff for automatic exact differentiation
+* MassSpringSystem with addable DistanceConstraints
+
+Read the [documentation](https://shakira-p.github.io/ASC-ODE-team11/overview.html)!
 
 Find theory behind here: https://jschoeberl.github.io/IntroSC/ODEs/ODEs.html
 
-# get the program running wuhu
+# Get the program running wuhu
 
 do this in src folder:
 
@@ -16,25 +31,19 @@ cmake ..
 make
 ```
 
-this is what I needed to install:
+this is what is needed to install:
 ```
 
 sudo apt install python3.12-ven
 sudo  apt install python3-pybind11
 
 ```
-and I also needed to install cmake, but I think only one of them worked. Probaly the second one:
+install cmake
 ```
-sudo apt install cmake  # version 4.1.2
-sudo apt  install cmake  # version 3.27.8-1build
+sudo apt install cmake  # version 3.27.8-1build
 ```
 
-then itshould run with the first block of code
-
-That worked thanks! :D
-
-
-# get documentation running on Windows WSL wuhu
+# On Windows WSL, get the build running wuhu
 
 ```sh
 # 1. Install pipx
