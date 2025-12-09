@@ -378,6 +378,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-size-t-200">9.6.3. Step Size T = 200</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#results-discussion">9.7. Results Discussion</a></li>
 </ul>
             </nav>
         </div>
@@ -431,23 +432,30 @@ with a nearly circular trajectory in the phase plot, indicating excellent energy
 </section>
 <section id="runge-kutta">
 <h2><span class="section-number">9.5. </span>Runge-Kutta<a class="headerlink" href="#runge-kutta" title="Link to this heading">#</a></h2>
+<p>For the Runge-Kutta methods, we utilize different Butcher tableaus to define the stages of the methods.</p>
 <section id="explicit-runge-kutta-method">
 <h3><span class="section-number">9.5.1. </span>Explicit Runge Kutta Method<a class="headerlink" href="#explicit-runge-kutta-method" title="Link to this heading">#</a></h3>
 <p>Below is a phase plot for a mass-spring system solved using both Explicit and Implicit Runge Kutta methods with the different helper functions to generate Butcher tableaus.</p>
 <p>First the system phase plot and time evolution using the Explicit Runge Kutta method with step size h=0.1:</p>
 <p><img alt="Mass Spring Phase Plot Explicit Runge Kutta Method" src="../../_images/MassSpringPhasePlot_rungekutta_explicit_100.png" />
 <img alt="Mass Spring System Time Evolution Explicit Runge Kutta Method" src="../../_images/MassSpringSystemTimeEvolution_rungekutta_explicit_100.png" /></p>
+<p>Here we can see that the Explicit Runge Kutta method provides a very good approximation of the system’s dynamics,
+with a nearly circular trajectory in the phase plot, indicating excellent energy conservation.</p>
 </section>
 <section id="implicit-runge-kutta-method">
 <h3><span class="section-number">9.5.2. </span>Implicit Runge Kutta Method<a class="headerlink" href="#implicit-runge-kutta-method" title="Link to this heading">#</a></h3>
 <p>Next the system phase plot and time evolution using the Implicit Runge Kutta method with step size h=0.1:</p>
 <p><img alt="Mass Spring Phase Plot Implicit Runge Kutta Method" src="../../_images/MassSpringPhasePlot_rungekutta_implicit_100.png" />
 <img alt="Mass Spring System Time Evolution Implicit Runge Kutta Method" src="../../_images/MassSpringSystemTimeEvolution_rungekutta_implicit_100.png" /></p>
+<p>Here we can see that the Implicit Runge Kutta method also provides a very good approximation of the system’s dynamics,
+with a nearly circular trajectory in the phase plot, that indicates excellent energy conservation.</p>
 <section id="implicit-runge-kutta-method-with-gauss-legendre-butcher-tableau">
 <h4><span class="section-number">9.5.2.1. </span>Implicit Runge Kutta Method with Gauss-Legendre Butcher Tableau<a class="headerlink" href="#implicit-runge-kutta-method-with-gauss-legendre-butcher-tableau" title="Link to this heading">#</a></h4>
 <p>Next the system phase plot and time evolution using the Implicit Runge Kutta method with Gauss-Legendre Butcher Tableau and step size h=0.1:</p>
 <p><img alt="Mass Spring Phase Plot Implicit Runge Kutta Method Gauss-Legendre" src="../../_images/MassSpringPhasePlot_rungekutta_gausslegrendre_100.png" />
 <img alt="Mass Spring System Time Evolution Implicit Runge Kutta Method Gauss-Legendre" src="../../_images/MassSpringSystemTimeEvolution_rungekutta_gausslegrendre_100.png" /></p>
+<p>Here we can see that the Implicit Runge Kutta method with Gauss-Legendre Butcher Tableau also provides a good approximation of the system’s dynamics,
+with a nearly perfect circular trajectory in the phase plot, indicating superior energy conservation.</p>
 </section>
 </section>
 </section>
@@ -455,8 +463,16 @@ with a nearly circular trajectory in the phase plot, indicating excellent energy
 <h2><span class="section-number">9.6. </span>Comparison of different methods and step sizes<a class="headerlink" href="#comparison-of-different-methods-and-step-sizes" title="Link to this heading">#</a></h2>
 <section id="step-size-t-100">
 <h3><span class="section-number">9.6.1. </span>Step Size T = 100<a class="headerlink" href="#step-size-t-100" title="Link to this heading">#</a></h3>
+<p>For the step size T = 100, we compare the phase plots and time evolution of the mass-spring system using
+different numerical methods.
+In the phase plot and time evolution plots below,
+we observe the differences in energy conservation and trajectory shapes for the different methods.
+For the step size T = 100, we have the following results:</p>
 <p><img alt="Mass Spring Phase Plot Step Size 100" src="../../_images/MassSpringPhasePlot_100.png" />
 <img alt="Mass Spring System Time Evolution Step Size 100" src="../../_images/MassSpringSystemTimeEvolution_100.png" /></p>
+<p>The phase plot shows that for example the explicit Euler method leads to a spiraling outwards trajectory,
+while the implicit Euler method results in a spiraling inwards trajectory.
+The Improved Euler and Crank-Nicolson show more circular trajectories, indicating better energy conservation.</p>
 </section>
 <section id="step-size-t-150">
 <h3><span class="section-number">9.6.2. </span>Step Size T = 150<a class="headerlink" href="#step-size-t-150" title="Link to this heading">#</a></h3>
@@ -468,6 +484,14 @@ with a nearly circular trajectory in the phase plot, indicating excellent energy
 <p><img alt="Mass Spring Phase Plot Step Size 100" src="../../_images/MassSpringPhasePlot_200.png" />
 <img alt="Mass Spring System Time Evolution Step Size 100" src="../../_images/MassSpringSystemTimeEvolution_200.png" /></p>
 </section>
+</section>
+<section id="results-discussion">
+<h2><span class="section-number">9.7. </span>Results Discussion<a class="headerlink" href="#results-discussion" title="Link to this heading">#</a></h2>
+<p>For various step sizes, we observe that smaller step sizes generally lead to better energy conservation.
+Larger step sizes can introduce significant numerical errors, leading to distorted trajectories in the phase plots.
+The choice of numerical method also plays a crucial role in the accuracy of the simulation.
+Explicit methods may be less stable for larger step sizes, while implicit methods tend to be more stable but computationally intensive.
+Overall, the Improved Euler and Crank-Nicolson methods provide a good balance between accuracy and computational efficiency for simulating the mass-spring system.</p>
 </section>
 </section>
 
@@ -553,6 +577,7 @@ with a nearly circular trajectory in the phase plot, indicating excellent energy
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-size-t-200">9.6.3. Step Size T = 200</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#results-discussion">9.7. Results Discussion</a></li>
 </ul>
   </nav></div>
 
