@@ -46,12 +46,17 @@ First the system phase plot and time evolution using the Improved Euler method w
 
 ## Runge-Kutta
 
+### Explicit Runge Kutta Method
+
 Below is a phase plot for a mass-spring system solved using both Explicit and Implicit Runge Kutta methods with the different helper functions to generate Butcher tableaus.
 
 First the system phase plot and time evolution using the Explicit Runge Kutta method with step size h=0.1:
 
 ![Mass Spring Phase Plot Explicit Runge Kutta Method](../../pictures/MassSpringPhasePlot_rungekutta_explicit_100.png)
 ![Mass Spring System Time Evolution Explicit Runge Kutta Method](../../pictures/MassSpringSystemTimeEvolution_rungekutta_explicit_100.png)
+
+
+### Implicit Runge Kutta Method
 
 Next the system phase plot and time evolution using the Implicit Runge Kutta method with step size h=0.1:
 
