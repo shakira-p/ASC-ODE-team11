@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>9. Mass Spring System &#8212; ASC-ODE</title>
+    <title>8. Mass Spring System &#8212; ASC-ODE</title>
   
   
   
@@ -60,8 +60,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'files/application/mass_spring';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="10. Electric Network Model" href="electric_network.html" />
-    <link rel="prev" title="8. Automatic Differentiation (AutoDiff)" href="../impl/autodiff.html" />
+    <link rel="next" title="9. Electric Network Model" href="electric_network.html" />
+    <link rel="prev" title="7. Automatic Differentiation (AutoDiff)" href="../impl/autodiff.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -175,7 +175,7 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../../overview.html">
-                    Documentation ASC-ODE Package
+                    Introduction to ASC-ODE
                 </a>
             </li>
         </ul>
@@ -190,13 +190,12 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Applications</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../impl/nonlinear.html">7. Nonlinear Function Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../impl/autodiff.html">8. Automatic Differentiation (AutoDiff)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../impl/autodiff.html">7. Automatic Differentiation (AutoDiff)</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Applications</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">9. Mass Spring System</a></li>
-<li class="toctree-l1"><a class="reference internal" href="electric_network.html">10. Electric Network Model</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">8. Mass Spring System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="electric_network.html">9. Electric Network Model</a></li>
 </ul>
 
     </div>
@@ -360,26 +359,26 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explicit-euler">9.1. Explicit Euler</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-euler">9.2. Implicit Euler</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improved-euler">9.3. Improved Euler</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crank-nicolson">9.4. Crank-Nicolson</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#runge-kutta">9.5. Runge-Kutta</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#explicit-runge-kutta-method">9.5.1. Explicit Runge Kutta Method</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-runge-kutta-method">9.5.2. Implicit Runge Kutta Method</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-runge-kutta-method-with-gauss-legendre-butcher-tableau">9.5.2.1. Implicit Runge Kutta Method with Gauss-Legendre Butcher Tableau</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explicit-euler">8.1. Explicit Euler</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-euler">8.2. Implicit Euler</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improved-euler">8.3. Improved Euler</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crank-nicolson">8.4. Crank-Nicolson</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#runge-kutta">8.5. Runge-Kutta</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#explicit-runge-kutta-method">8.5.1. Explicit Runge Kutta Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-runge-kutta-method">8.5.2. Implicit Runge Kutta Method</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-runge-kutta-method-with-gauss-legendre-butcher-tableau">8.5.2.1. Implicit Runge Kutta Method with Gauss-Legendre Butcher Tableau</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-of-different-methods-and-step-sizes">9.6. Comparison of different methods and step sizes</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-size-t-100">9.6.1. Step Size T = 100</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-size-t-150">9.6.2. Step Size T = 150</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-size-t-200">9.6.3. Step Size T = 200</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#results-discussion">9.6.4. Results Discussion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-of-different-methods-and-step-sizes">8.6. Comparison of different methods and step sizes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-size-t-100">8.6.1. Step Size T = 100</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-size-t-150">8.6.2. Step Size T = 150</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-size-t-200">8.6.3. Step Size T = 200</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#results-discussion">8.6.4. Results Discussion</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulation-of-mass-spring-system">9.7. Simulation of Mass-Spring System</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulation-of-mass-spring-system">8.7. Simulation of Mass-Spring System</a></li>
 </ul>
             </nav>
         </div>
@@ -392,13 +391,13 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="mass-spring-system">
-<h1><span class="section-number">9. </span>Mass Spring System<a class="headerlink" href="#mass-spring-system" title="Link to this heading">#</a></h1>
+<h1><span class="section-number">8. </span>Mass Spring System<a class="headerlink" href="#mass-spring-system" title="Link to this heading">#</a></h1>
 <p>This example demonstrates the application of the ASC-ODE package to simulate
 a mass-spring system. The mass-spring system is a classic example in physics
 and engineering, characterized by oscillatory motion due to the restoring force
 of the spring.</p>
 <section id="explicit-euler">
-<h2><span class="section-number">9.1. </span>Explicit Euler<a class="headerlink" href="#explicit-euler" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">8.1. </span>Explicit Euler<a class="headerlink" href="#explicit-euler" title="Link to this heading">#</a></h2>
 <p>Below is a phase plot for a mass-spring system solved using the Explicit Euler method.</p>
 <p><img alt="Mass Spring Phase Plot Explicit Euler Method" src="../../_images/MassSpringPhasePlot_explict.png" /></p>
 <p><img alt="Mass Spring System Time Evolution Explicit Euler Method" src="../../_images/MassSpringSystemTimeEvolution_explict.png" /></p>
@@ -406,7 +405,7 @@ of the spring.</p>
 leading to a spiraling outwards trajectory in the phase plot.</p>
 </section>
 <section id="implicit-euler">
-<h2><span class="section-number">9.2. </span>Implicit Euler<a class="headerlink" href="#implicit-euler" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">8.2. </span>Implicit Euler<a class="headerlink" href="#implicit-euler" title="Link to this heading">#</a></h2>
 <p>Below is a phase plot for a mass-spring system solved using the Implicit Euler method.</p>
 <p><img alt="Mass Spring Phase Plot Implicit Euler Method" src="../../_images/MassSpringPhasePlot_implicit.png" /></p>
 <p><img alt="Mass Spring System Time Evolution Implicit Euler Method" src="../../_images/MassSpringSystemTimeEvolution_implicit.png" /></p>
@@ -414,7 +413,7 @@ leading to a spiraling outwards trajectory in the phase plot.</p>
 resulting in a spiraling inwards trajectory in the phase plot.</p>
 </section>
 <section id="improved-euler">
-<h2><span class="section-number">9.3. </span>Improved Euler<a class="headerlink" href="#improved-euler" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">8.3. </span>Improved Euler<a class="headerlink" href="#improved-euler" title="Link to this heading">#</a></h2>
 <p>Below is a phase plot for a mass-spring system solved using the Improved Euler method.</p>
 <p>First the system phase plot and time evolution using the Improved Euler method with step size h=0.1:</p>
 <p><img alt="Mass Spring Phase Plot Improved Euler Method" src="../../_images/MassSpringPhasePlot_improved.png" /></p>
@@ -423,7 +422,7 @@ resulting in a spiraling inwards trajectory in the phase plot.</p>
 with a more circular trajectory in the phase plot, indicating improved energy conservation compared to the Explicit and Implicit Euler methods.</p>
 </section>
 <section id="crank-nicolson">
-<h2><span class="section-number">9.4. </span>Crank-Nicolson<a class="headerlink" href="#crank-nicolson" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">8.4. </span>Crank-Nicolson<a class="headerlink" href="#crank-nicolson" title="Link to this heading">#</a></h2>
 <p>Below is a phase plot for a mass-spring system solved using the Crank-Nicolson method.</p>
 <p>First the system phase plot and time evolution using the Improved Euler method with step size h=0.1:</p>
 <p><img alt="Mass Spring Phase Plot Improved Euler Method" src="../../_images/MassSpringPhasePlot_crank.png" /></p>
@@ -432,10 +431,10 @@ with a more circular trajectory in the phase plot, indicating improved energy co
 with a nearly circular trajectory in the phase plot, indicating excellent energy conservation.</p>
 </section>
 <section id="runge-kutta">
-<h2><span class="section-number">9.5. </span>Runge-Kutta<a class="headerlink" href="#runge-kutta" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">8.5. </span>Runge-Kutta<a class="headerlink" href="#runge-kutta" title="Link to this heading">#</a></h2>
 <p>For the Runge-Kutta methods, we utilize different Butcher tableaus to define the stages of the methods.</p>
 <section id="explicit-runge-kutta-method">
-<h3><span class="section-number">9.5.1. </span>Explicit Runge Kutta Method<a class="headerlink" href="#explicit-runge-kutta-method" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">8.5.1. </span>Explicit Runge Kutta Method<a class="headerlink" href="#explicit-runge-kutta-method" title="Link to this heading">#</a></h3>
 <p>Below is a phase plot for a mass-spring system solved using both Explicit and Implicit Runge Kutta methods with the different helper functions to generate Butcher tableaus.</p>
 <p>First the system phase plot and time evolution using the Explicit Runge Kutta method with step size h=0.1:</p>
 <p><img alt="Mass Spring Phase Plot Explicit Runge Kutta Method" src="../../_images/MassSpringPhasePlot_rungekutta_explicit_100.png" />
@@ -444,14 +443,14 @@ with a nearly circular trajectory in the phase plot, indicating excellent energy
 with a nearly circular trajectory in the phase plot, indicating excellent energy conservation.</p>
 </section>
 <section id="implicit-runge-kutta-method">
-<h3><span class="section-number">9.5.2. </span>Implicit Runge Kutta Method<a class="headerlink" href="#implicit-runge-kutta-method" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">8.5.2. </span>Implicit Runge Kutta Method<a class="headerlink" href="#implicit-runge-kutta-method" title="Link to this heading">#</a></h3>
 <p>Next the system phase plot and time evolution using the Implicit Runge Kutta method with step size h=0.1:</p>
 <p><img alt="Mass Spring Phase Plot Implicit Runge Kutta Method" src="../../_images/MassSpringPhasePlot_rungekutta_implicit_100.png" />
 <img alt="Mass Spring System Time Evolution Implicit Runge Kutta Method" src="../../_images/MassSpringSystemTimeEvolution_rungekutta_implicit_100.png" /></p>
 <p>Here we can see that the Implicit Runge Kutta method also provides a very good approximation of the system’s dynamics,
 with a nearly circular trajectory in the phase plot, that indicates excellent energy conservation.</p>
 <section id="implicit-runge-kutta-method-with-gauss-legendre-butcher-tableau">
-<h4><span class="section-number">9.5.2.1. </span>Implicit Runge Kutta Method with Gauss-Legendre Butcher Tableau<a class="headerlink" href="#implicit-runge-kutta-method-with-gauss-legendre-butcher-tableau" title="Link to this heading">#</a></h4>
+<h4><span class="section-number">8.5.2.1. </span>Implicit Runge Kutta Method with Gauss-Legendre Butcher Tableau<a class="headerlink" href="#implicit-runge-kutta-method-with-gauss-legendre-butcher-tableau" title="Link to this heading">#</a></h4>
 <p>Next the system phase plot and time evolution using the Implicit Runge Kutta method with Gauss-Legendre Butcher Tableau and step size h=0.1:</p>
 <p><img alt="Mass Spring Phase Plot Implicit Runge Kutta Method Gauss-Legendre" src="../../_images/MassSpringPhasePlot_rungekutta_gausslegrendre_100.png" />
 <img alt="Mass Spring System Time Evolution Implicit Runge Kutta Method Gauss-Legendre" src="../../_images/MassSpringSystemTimeEvolution_rungekutta_gausslegrendre_100.png" /></p>
@@ -461,9 +460,9 @@ with a nearly perfect circular trajectory in the phase plot, indicating superior
 </section>
 </section>
 <section id="comparison-of-different-methods-and-step-sizes">
-<h2><span class="section-number">9.6. </span>Comparison of different methods and step sizes<a class="headerlink" href="#comparison-of-different-methods-and-step-sizes" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">8.6. </span>Comparison of different methods and step sizes<a class="headerlink" href="#comparison-of-different-methods-and-step-sizes" title="Link to this heading">#</a></h2>
 <section id="step-size-t-100">
-<h3><span class="section-number">9.6.1. </span>Step Size T = 100<a class="headerlink" href="#step-size-t-100" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">8.6.1. </span>Step Size T = 100<a class="headerlink" href="#step-size-t-100" title="Link to this heading">#</a></h3>
 <p>For the step size T = 100, we compare the phase plots and time evolution of the mass-spring system using
 different numerical methods.
 In the phase plot and time evolution plots below,
@@ -476,17 +475,17 @@ while the implicit Euler method results in a spiraling inwards trajectory.
 The Improved Euler and Crank-Nicolson show more circular trajectories, indicating better energy conservation.</p>
 </section>
 <section id="step-size-t-150">
-<h3><span class="section-number">9.6.2. </span>Step Size T = 150<a class="headerlink" href="#step-size-t-150" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">8.6.2. </span>Step Size T = 150<a class="headerlink" href="#step-size-t-150" title="Link to this heading">#</a></h3>
 <p><img alt="Mass Spring Phase Plot Step Size 100" src="../../_images/MassSpringPhasePlot_150.png" />
 <img alt="Mass Spring System Time Evolution Step Size 100" src="../../_images/MassSpringSystemTimeEvolution_150.png" /></p>
 </section>
 <section id="step-size-t-200">
-<h3><span class="section-number">9.6.3. </span>Step Size T = 200<a class="headerlink" href="#step-size-t-200" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">8.6.3. </span>Step Size T = 200<a class="headerlink" href="#step-size-t-200" title="Link to this heading">#</a></h3>
 <p><img alt="Mass Spring Phase Plot Step Size 100" src="../../_images/MassSpringPhasePlot_200.png" />
 <img alt="Mass Spring System Time Evolution Step Size 100" src="../../_images/MassSpringSystemTimeEvolution_200.png" /></p>
 </section>
 <section id="results-discussion">
-<h3><span class="section-number">9.6.4. </span>Results Discussion<a class="headerlink" href="#results-discussion" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">8.6.4. </span>Results Discussion<a class="headerlink" href="#results-discussion" title="Link to this heading">#</a></h3>
 <p>For various step sizes, we observe that smaller step sizes generally lead to better energy conservation.
 Larger step sizes can introduce significant numerical errors, leading to distorted trajectories in the phase plots.
 The choice of numerical method also plays a crucial role in the accuracy of the simulation.
@@ -495,7 +494,7 @@ Overall, the Improved Euler and Crank-Nicolson methods provide a good balance be
 </section>
 </section>
 <section id="simulation-of-mass-spring-system">
-<h2><span class="section-number">9.7. </span>Simulation of Mass-Spring System<a class="headerlink" href="#simulation-of-mass-spring-system" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">8.7. </span>Simulation of Mass-Spring System<a class="headerlink" href="#simulation-of-mass-spring-system" title="Link to this heading">#</a></h2>
 <p>Here is a simulation of a simple mass-spring system where a mass is attached to a spring and oscillates back and forth.
 <img alt="Chain Simulation" src="../../_images/mass_spring_chain.gif" /></p>
 <p>Here we see a simulation of a mass-spring chain system where multiple masses are connected by springs.
@@ -539,7 +538,7 @@ Overall, the Improved Euler and Crank-Nicolson methods provide a good balance be
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">8. </span>Automatic Differentiation (AutoDiff)</p>
+        <p class="prev-next-title"><span class="section-number">7. </span>Automatic Differentiation (AutoDiff)</p>
       </div>
     </a>
     <a class="right-next"
@@ -547,7 +546,7 @@ Overall, the Improved Euler and Crank-Nicolson methods provide a good balance be
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">10. </span>Electric Network Model</p>
+        <p class="prev-next-title"><span class="section-number">9. </span>Electric Network Model</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -567,26 +566,26 @@ Overall, the Improved Euler and Crank-Nicolson methods provide a good balance be
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explicit-euler">9.1. Explicit Euler</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-euler">9.2. Implicit Euler</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improved-euler">9.3. Improved Euler</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crank-nicolson">9.4. Crank-Nicolson</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#runge-kutta">9.5. Runge-Kutta</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#explicit-runge-kutta-method">9.5.1. Explicit Runge Kutta Method</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-runge-kutta-method">9.5.2. Implicit Runge Kutta Method</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-runge-kutta-method-with-gauss-legendre-butcher-tableau">9.5.2.1. Implicit Runge Kutta Method with Gauss-Legendre Butcher Tableau</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explicit-euler">8.1. Explicit Euler</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-euler">8.2. Implicit Euler</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improved-euler">8.3. Improved Euler</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crank-nicolson">8.4. Crank-Nicolson</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#runge-kutta">8.5. Runge-Kutta</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#explicit-runge-kutta-method">8.5.1. Explicit Runge Kutta Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-runge-kutta-method">8.5.2. Implicit Runge Kutta Method</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-runge-kutta-method-with-gauss-legendre-butcher-tableau">8.5.2.1. Implicit Runge Kutta Method with Gauss-Legendre Butcher Tableau</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-of-different-methods-and-step-sizes">9.6. Comparison of different methods and step sizes</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-size-t-100">9.6.1. Step Size T = 100</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-size-t-150">9.6.2. Step Size T = 150</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-size-t-200">9.6.3. Step Size T = 200</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#results-discussion">9.6.4. Results Discussion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-of-different-methods-and-step-sizes">8.6. Comparison of different methods and step sizes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-size-t-100">8.6.1. Step Size T = 100</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-size-t-150">8.6.2. Step Size T = 150</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-size-t-200">8.6.3. Step Size T = 200</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#results-discussion">8.6.4. Results Discussion</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulation-of-mass-spring-system">9.7. Simulation of Mass-Spring System</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulation-of-mass-spring-system">8.7. Simulation of Mass-Spring System</a></li>
 </ul>
   </nav></div>
 

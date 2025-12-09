@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>8. Automatic Differentiation (AutoDiff) &#8212; ASC-ODE</title>
+    <title>7. Automatic Differentiation (AutoDiff) &#8212; ASC-ODE</title>
   
   
   
@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -60,8 +60,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'files/impl/autodiff';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="9. Mass Spring System" href="../application/mass_spring.html" />
-    <link rel="prev" title="7. Nonlinear Function Class" href="nonlinear.html" />
+    <link rel="next" title="8. Mass Spring System" href="../application/mass_spring.html" />
+    <link rel="prev" title="6. Runge Kutta Methods" href="../stepper/runge_kutta.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -175,7 +175,7 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../../overview.html">
-                    Documentation ASC-ODE Package
+                    Introduction to ASC-ODE
                 </a>
             </li>
         </ul>
@@ -190,13 +190,12 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Applications</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="nonlinear.html">7. Nonlinear Function Class</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">8. Automatic Differentiation (AutoDiff)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">7. Automatic Differentiation (AutoDiff)</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Applications</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../application/mass_spring.html">9. Mass Spring System</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../application/electric_network.html">10. Electric Network Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../application/mass_spring.html">8. Mass Spring System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../application/electric_network.html">9. Electric Network Model</a></li>
 </ul>
 
     </div>
@@ -360,13 +359,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">8.1. Overview</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-automatic-differentiation">8.2. Why Automatic Differentiation?</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic-vector-sizing">8.3. Dynamic Vector Sizing</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usage">8.4. Usage</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-operators">8.5. Supported Operators</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-functions">8.6. Supported Functions</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#helper-functions">8.7. Helper Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">7.1. Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-automatic-differentiation">7.2. Why Automatic Differentiation?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic-vector-sizing">7.3. Dynamic Vector Sizing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usage">7.4. Usage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-operators">7.5. Supported Operators</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-functions">7.6. Supported Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#helper-functions">7.7. Helper Functions</a></li>
 </ul>
             </nav>
         </div>
@@ -379,13 +378,13 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="automatic-differentiation-autodiff">
-<h1><span class="section-number">8. </span>Automatic Differentiation (AutoDiff)<a class="headerlink" href="#automatic-differentiation-autodiff" title="Link to this heading">#</a></h1>
+<h1><span class="section-number">7. </span>Automatic Differentiation (AutoDiff)<a class="headerlink" href="#automatic-differentiation-autodiff" title="Link to this heading">#</a></h1>
 <section id="overview">
-<h2><span class="section-number">8.1. </span>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">7.1. </span>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">AutoDiff&lt;T&gt;</span></code> class implements <strong>forward-mode automatic differentiation</strong>, computing exact derivatives alongside function values in a single pass.</p>
 </section>
 <section id="why-automatic-differentiation">
-<h2><span class="section-number">8.2. </span>Why Automatic Differentiation?<a class="headerlink" href="#why-automatic-differentiation" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">7.2. </span>Why Automatic Differentiation?<a class="headerlink" href="#why-automatic-differentiation" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><strong>Symbolic Differentiation</strong>: Exact results, but complex expressions and slow evaluation</p></li>
 <li><p><strong>Finite Differences</strong>: Simple to implement, but suffers from numerical errors and requires O(n) evaluations</p></li>
@@ -394,7 +393,7 @@ document.write(`
 <p>AutoDiff propagates derivatives through the chain rule automatically, avoiding truncation errors inherent in finite differences.</p>
 </section>
 <section id="dynamic-vector-sizing">
-<h2><span class="section-number">8.3. </span>Dynamic Vector Sizing<a class="headerlink" href="#dynamic-vector-sizing" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">7.3. </span>Dynamic Vector Sizing<a class="headerlink" href="#dynamic-vector-sizing" title="Link to this heading">#</a></h2>
 <p>The derivative vector uses <code class="docutils literal notranslate"><span class="pre">std::vector&lt;T&gt;</span></code> rather than fixed-size arrays, enabling:</p>
 <ul class="simple">
 <li><p>Runtime-determined variable counts (essential for Python bindings via pybind11)</p></li>
@@ -403,7 +402,7 @@ document.write(`
 </ul>
 </section>
 <section id="usage">
-<h2><span class="section-number">8.4. </span>Usage<a class="headerlink" href="#usage" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">7.4. </span>Usage<a class="headerlink" href="#usage" title="Link to this heading">#</a></h2>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">ASC_ode</span><span class="p">;</span>
 
 <span class="c1">// Create variable x = 2.0, derivative index 0, total 2 variables</span>
@@ -419,7 +418,7 @@ document.write(`
 </div>
 </section>
 <section id="supported-operators">
-<h2><span class="section-number">8.5. </span>Supported Operators<a class="headerlink" href="#supported-operators" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">7.5. </span>Supported Operators<a class="headerlink" href="#supported-operators" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code>, <code class="docutils literal notranslate"><span class="pre">*</span></code>, <code class="docutils literal notranslate"><span class="pre">/</span></code> - Binary arithmetic (AutoDiff &lt;-&gt; AutoDiff, AutoDiff &lt;-&gt; scalar)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">-</span></code> (unary) - Negation</p></li>
@@ -427,7 +426,7 @@ document.write(`
 </ul>
 </section>
 <section id="supported-functions">
-<h2><span class="section-number">8.6. </span>Supported Functions<a class="headerlink" href="#supported-functions" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">7.6. </span>Supported Functions<a class="headerlink" href="#supported-functions" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">sin(u)</span></code> - Derivative: cos(u) * u’</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">cos(u)</span></code> - Derivative: -sin(u) * u’</p></li>
@@ -439,7 +438,7 @@ document.write(`
 </ul>
 </section>
 <section id="helper-functions">
-<h2><span class="section-number">8.7. </span>Helper Functions<a class="headerlink" href="#helper-functions" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">7.7. </span>Helper Functions<a class="headerlink" href="#helper-functions" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">derivative(ad,</span> <span class="pre">index)</span></code> - Extract derivative at specific index</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">maxSize(a,</span> <span class="pre">b)</span></code> - Get maximum derivative vector size</p></li>
@@ -479,12 +478,12 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="nonlinear.html"
+       href="../stepper/runge_kutta.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">7. </span>Nonlinear Function Class</p>
+        <p class="prev-next-title"><span class="section-number">6. </span>Runge Kutta Methods</p>
       </div>
     </a>
     <a class="right-next"
@@ -492,7 +491,7 @@ document.write(`
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">9. </span>Mass Spring System</p>
+        <p class="prev-next-title"><span class="section-number">8. </span>Mass Spring System</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -512,13 +511,13 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">8.1. Overview</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-automatic-differentiation">8.2. Why Automatic Differentiation?</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic-vector-sizing">8.3. Dynamic Vector Sizing</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usage">8.4. Usage</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-operators">8.5. Supported Operators</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-functions">8.6. Supported Functions</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#helper-functions">8.7. Helper Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">7.1. Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-automatic-differentiation">7.2. Why Automatic Differentiation?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic-vector-sizing">7.3. Dynamic Vector Sizing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usage">7.4. Usage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-operators">7.5. Supported Operators</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-functions">7.6. Supported Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#helper-functions">7.7. Helper Functions</a></li>
 </ul>
   </nav></div>
 

@@ -1,11 +1,13 @@
-# Documentation ASC-ODE Package
+# Introduction to ASC-ODE
 
 ASC-ODE is a C++ library for solving ordinary differential equations (ODEs).
 The equation is defined by the right hand side function.
 ASC-ODE provides various time-steppers which may be used for odes with right hand sides
 given by a function object.
 
-## How to run the libary
+Find theory behind here: https://jschoeberl.github.io/IntroSC/ODEs/ODEs.html
+
+## How to run the libarys
 
 Make sure you have the necessary dependencies installed, such as Python 3.12 and pybind11.
 You can install them using:
