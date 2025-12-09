@@ -117,7 +117,7 @@ The Improved Euler and Crank-Nicolson show more circular trajectories, indicatin
 ![Mass Spring Phase Plot Step Size 100](../../pictures//MassSpringPhasePlot_200.png)
 ![Mass Spring System Time Evolution Step Size 100](../../pictures//MassSpringSystemTimeEvolution_200.png)
 
-## Results Discussion
+### Results Discussion
 
 For various step sizes, we observe that smaller step sizes generally lead to better energy conservation.
 Larger step sizes can introduce significant numerical errors, leading to distorted trajectories in the phase plots.
