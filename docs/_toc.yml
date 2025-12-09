@@ -18,9 +18,6 @@ parts:
     numbered: True
     chapters:
       - file: files/impl/autodiff.md
-  - caption: Applications
-    numbered: True
-    chapters:
       - file: files/application/mass_spring.md
       - file: files/application/electric_network.md
 

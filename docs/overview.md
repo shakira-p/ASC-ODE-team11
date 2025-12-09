@@ -7,7 +7,7 @@ given by a function object.
 
 Find theory behind here: https://jschoeberl.github.io/IntroSC/ODEs/ODEs.html
 
-## How to run the libarys
+## How to run the library
 
 Make sure you have the necessary dependencies installed, such as Python 3.12 and pybind11.
 You can install them using:
