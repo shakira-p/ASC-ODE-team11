@@ -141,7 +141,8 @@ std::ostream & operator<< (std::ostream & ost, MassSpringSystem<D> & mss)
     ost << "m = " << m.mass << ", pos = " << m.pos << std::endl;
 
   ost << "springs: " << std::endl;
-  for (auto sp : mss.springs())
+  for (auto sp : mss.springs())et_initial_velocities({
+    mA: (0, 0, 1)})
     ost << "length = " << sp.length << ", stiffness = " << sp.stiffness
         << ", C1 = " << sp.connectors[0] << ", C2 = " << sp.connectors[1] << std::endl;
   return ost;

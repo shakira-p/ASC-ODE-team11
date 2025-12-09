@@ -127,9 +127,12 @@ Overall, the Improved Euler and Crank-Nicolson methods provide a good balance be
 
 
 ## Simulation of Mass-Spring System
+Here are examples of systems we can build with this library. (these are gifs so you might need to refresh page  to run it again)
 
-Here is a simulation of a simple mass-spring system where a mass is attached to a spring and oscillates back and forth.
+## Chain:
+By connecting few masses with springs we can create a simple chain. To create the most enjoyable visual effects first masses where much higher compared to last masses of chain and stiffens of first springs was higher than last 2 springs.
 ![Chain Simulation](../../pictures/gifs/mass_spring_chain.gif)
 
-Here we see a simulation of a mass-spring chain system where multiple masses are connected by springs.
+## Crane:
+Here we tried to create system similar to container crane used in ports. This way we can simulate vibration depending on the mass of transported part ass well as crane dimensions.
 ![Crane Simulation](../../pictures/gifs/crane_simulation.gif)
