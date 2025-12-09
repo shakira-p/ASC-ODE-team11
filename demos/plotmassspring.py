@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 type = ["explicit", "implicit", "improved", "crank"]
-step = "200"
+step = "150"
 data = []
 
 colors = ['#1f77b4', '#ff7f0e', '#d62728', '#2ca02c']
