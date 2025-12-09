@@ -13,7 +13,8 @@ Below is a phase plot for a mass-spring system solved using the Explicit Euler m
 
 ![Mass Spring System Time Evolution Explicit Euler Method](../../pictures/MassSpringSystemTimeEvolution_explict.png)
 
-Here we can see that the Explicit Euler method does not conserve energy, leading to a spiraling outwards trajectory in the phase plot.
+Here we can see that the Explicit Euler method does not conserve energy,
+leading to a spiraling outwards trajectory in the phase plot.
 
 ## Implicit Euler
 
@@ -22,6 +23,9 @@ Below is a phase plot for a mass-spring system solved using the Implicit Euler m
 ![Mass Spring Phase Plot Implicit Euler Method](../../pictures/MassSpringPhasePlot_implicit.png)
 
 ![Mass Spring System Time Evolution Implicit Euler Method](../../pictures/MassSpringSystemTimeEvolution_implicit.png)
+
+Here we observe that the Implicit Euler method also fails to conserve energy, 
+resulting in a spiraling inwards trajectory in the phase plot.
 
 ## Improved Euler
 
@@ -33,6 +37,9 @@ First the system phase plot and time evolution using the Improved Euler method w
 
 ![Mass Spring System Time Evolution Improved Euler Method](../../pictures/MassSpringSystemTimeEvolution_improved.png)
 
+Here we can see that the Improved Euler method provides a better approximation of the system's dynamics,
+with a more circular trajectory in the phase plot, indicating improved energy conservation compared to the Explicit and Implicit Euler methods.
+
 ## Crank-Nicolson
 
 Below is a phase plot for a mass-spring system solved using the Crank-Nicolson method.  
@@ -42,6 +49,9 @@ First the system phase plot and time evolution using the Improved Euler method w
 ![Mass Spring Phase Plot Improved Euler Method](../../pictures/MassSpringPhasePlot_crank.png)
 
 ![Mass Spring System Time Evolution Improved Euler Method](../../pictures/MassSpringSystemTimeEvolution_crank.png)
+
+Here we can see that the Crank-Nicolson method provides a very good approximation of the system's dynamics,
+with a nearly circular trajectory in the phase plot, indicating excellent energy conservation.
 
 
 ## Runge-Kutta
@@ -63,7 +73,12 @@ Next the system phase plot and time evolution using the Implicit Runge Kutta met
 ![Mass Spring Phase Plot Implicit Runge Kutta Method](../../pictures/MassSpringPhasePlot_rungekutta_implicit_100.png)
 ![Mass Spring System Time Evolution Implicit Runge Kutta Method](../../pictures/MassSpringSystemTimeEvolution_rungekutta_implicit_100.png)
 
-TODO add rest of mass spring plots system radau, legrendre, gauss
+#### Implicit Runge Kutta Method with Gauss-Legendre Butcher Tableau
+
+Next the system phase plot and time evolution using the Implicit Runge Kutta method with Gauss-Legendre Butcher Tableau and step size h=0.1:
+
+![Mass Spring Phase Plot Implicit Runge Kutta Method Gauss-Legendre](../../pictures/MassSpringPhasePlot_rungekutta_gausslegrendre_100.png)
+![Mass Spring System Time Evolution Implicit Runge Kutta Method Gauss-Legendre](../../pictures/MassSpringSystemTimeEvolution_rungekutta_gausslegrendre_100.png)
 
 ## Comparison of different methods and step sizes
 
