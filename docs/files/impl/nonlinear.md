@@ -1,1 +1,0 @@
-# Nonlinear Function Class

@@ -17,7 +17,6 @@ parts:
   - caption: Applications
     numbered: True
     chapters:
-      - file: files/impl/nonlinear.md
       - file: files/impl/autodiff.md
   - caption: Applications
     numbered: True
